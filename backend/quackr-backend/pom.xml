@@ -10,9 +10,9 @@
 	</parent>
 
 	<groupId>de.maxkorte</groupId>
-	<artifactId>quackr-backend</artifactId>
+	<artifactId>quackrbackend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>quackr-backend</name>
+	<name>quackrbackend</name>
 	<packaging>pom</packaging>
 
 	<properties>

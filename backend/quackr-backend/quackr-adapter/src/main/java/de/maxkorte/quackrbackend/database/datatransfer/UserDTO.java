@@ -1,8 +1,6 @@
 package de.maxkorte.quackrbackend.database.datatransfer;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +15,9 @@ import java.util.Set;
 @Entity
 public class UserDTO {
     @Id
+    @GeneratedValue
     private Long id;
+    @Column(unique = true)
     private String username;
     @OneToMany(mappedBy = "user")
     private Set<MessageDTO> messages;

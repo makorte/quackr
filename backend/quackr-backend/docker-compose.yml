@@ -1,0 +1,15 @@
+version: '3.7'
+volumes:
+  db-quackr:
+services:
+  db:
+    image: postgres:15.1
+    restart: always
+    environment:
+      POSTGRES_USER: quackr
+      POSTGRES_PASSWORD: quackr
+      POSTGRES_DB: quackr
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-quackr:/var/lib/postgresql/data

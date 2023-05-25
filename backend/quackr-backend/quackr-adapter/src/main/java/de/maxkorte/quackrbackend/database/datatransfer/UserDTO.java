@@ -6,19 +6,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Set;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
+@Table(name = "quackr_user")
 public class UserDTO {
     @Id
     @GeneratedValue
     private Long id;
     @Column(unique = true)
     private String username;
-    @OneToMany(mappedBy = "user")
-    private Set<MessageDTO> messages;
+    private String password;
 }

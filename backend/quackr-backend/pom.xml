@@ -19,10 +19,20 @@
 		<java.version>17</java.version>
 	</properties>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter</artifactId>
+				<version>3.0.6</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<modules>
+		<module>quackr-application</module>
 		<module>quackr-domain</module>
 		<module>quackr-service</module>
 		<module>quackr-adapter</module>
-		<module>quackr-application</module>
 	</modules>
 </project>

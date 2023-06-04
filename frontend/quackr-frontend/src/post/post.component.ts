@@ -45,4 +45,12 @@ export class PostComponent {
       this.likeChange();
     }
   }
+
+  getLikeButtonClasses() {
+    return this.hasLiked ? "liked likeButton" : "likeButton";
+  }
+
+  getDislikeButtonClasses() {
+    return this.hasDisliked ? "disliked likeButton" : "likeButton";
+  }
 }

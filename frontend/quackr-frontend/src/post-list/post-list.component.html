@@ -1,6 +1,6 @@
 <button *ngIf="noPostsLoaded()" (click)="loadPosts()">Erneut Laden</button>
 
-<app-post *ngFor="let post of posts;" text="{{post.message}}"
+<app-post *ngFor="let post of posts;" [text]="post.message"
+          [likes]="post.likes" [dislikes]="post.dislikes"
 >
-  <!--          likes={{post.likes}} dislikes="{{post.dislikes}}"-->
 </app-post>

@@ -6,16 +6,20 @@ import { AppComponent } from './app.component';
 import {PostComponent} from "../post/post.component";
 import {RestService} from "../rest.service";
 import {PostListComponent} from "../post-list/post-list.component";
+import {CreatePostPopupComponent} from "../create-post-popup/create-post-popup.component";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
     PostComponent,
-    PostListComponent
+    PostListComponent,
+    CreatePostPopupComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [RestService],
   bootstrap: [AppComponent]

@@ -18,10 +18,20 @@ export class PostListComponent {
   }
 
   loadPosts() {
-    this.posts = this.restService.loadPosts();
+    let result = this.restService.loadPosts();
+    result.then(value => this.posts = value);
   }
 
   noPostsLoaded(): boolean {
     return this.posts.length == 0;
   }
+
+  postLikeChange(post: Post,  hasLiked: boolean) {
+    this.restService.postLikeChange(post, hasLiked);
+  }
+  postDisikeChange(post: Post,  hasDisliked: boolean) {
+    this.restService.postDislikeChange(post, hasDisliked);
+  }
+
+  protected readonly onabort = onabort;
 }

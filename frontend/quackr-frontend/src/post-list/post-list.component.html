@@ -2,5 +2,7 @@
 
 <app-post *ngFor="let post of posts;" [text]="post.message"
           [likes]="post.likes" [dislikes]="post.dislikes"
+      (onLikeChange)="postLikeChange(post, $event)"
+      (onDislikeChange)="postDisikeChange(post, $event)"
 >
 </app-post>

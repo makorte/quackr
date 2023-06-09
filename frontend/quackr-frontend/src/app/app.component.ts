@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {RestService} from "../rest.service";
 import {Post} from "../model/Post";
 
 @Component({
@@ -15,3 +16,4 @@ export class AppComponent {
     }
   }
 }
+

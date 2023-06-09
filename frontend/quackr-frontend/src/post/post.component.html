@@ -1,9 +1,11 @@
-<div id="post-div">
-  <p id="post-text">{{text}}</p>
-  <span id="like-counter">{{likes}}</span>
-  <button classList="{{getLikeButtonClasses()}}" id="like-button" (click)="likeChange()">⬆️</button>
-  <span id="dislike-counter">{{dislikes}}</span>
-  <button [classList]="getDislikeButtonClasses()" id="dislike-button" (click)="dislikeChange()">⬇️
-  </button>
+<div id="post-div" class="col card">
+  <div class="card-body">
+    <p id="post-text">{{text}}</p>
+  </div>
+  <div class="card-footer btn-toolbar gap-1" role="toolbar" >
+    <button classList="{{getLikeButtonClasses()}}" id="like-button" (click)="likeChange()">{{likes}}  ⬆️</button>
+    <button [classList]="getDislikeButtonClasses()" id="dislike-button" (click)="dislikeChange()">{{dislikes}}  ⬇️
+    </button>
+  </div>
 </div>
 

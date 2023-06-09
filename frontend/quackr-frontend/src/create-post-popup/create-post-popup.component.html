@@ -1,11 +1,13 @@
 <dialog id="create-post-dialog" class="createPostDialog">
-  <h1 >Erstelle einen neuem Post</h1>
+  <h1 class="display-4">Erstelle einen neuen Post</h1>
 
-  <textarea placeholder="Inhalt..." cols="40" rows="5" [(ngModel)]="text"></textarea>
+ <div class="mb-3">
+   <textarea placeholder="Inhalt..." cols="40" rows="5" [(ngModel)]="text"></textarea>
+ </div>
   <p *ngIf="isError">Dein Post konnte nicht erstellt werden, versuche es nochmal</p>
   <div>
-    <button type="reset" (click)="closeDialog()" class="reset">Zurück</button>
-    <button type="submit" (click)="createPost()" class="submit">Erstellen</button>
+    <button type="reset" (click)="closeDialog()" class="reset btn btn-secondary">Zurück</button>
+    <button type="submit" (click)="createPost()" class="submit btn btn-success">Erstellen</button>
   </div>
 
 </dialog>

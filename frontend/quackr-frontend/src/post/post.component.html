@@ -1,11 +1,21 @@
-<div id="post-div" class="col card">
-  <div class="card-body">
-    <p id="post-text">{{text}}</p>
+
+  <div id="post-div" class="col card">
+    <div *ngIf="post.imageLink != null" class="">
+      <img  src="/assets/katze.jpg" class="card-img-top  object-fit-contain border rounded postImage"   alt="..."/>
+    </div>
+    <div class="card-body">
+      <a routerLink="/app/post-details/{{post.id}}" class="text-decoration-none">
+          <p id="post-text" class="text-body">{{post.message}}</p>
+      </a>
+    </div>
+    <div class="card-footer btn-toolbar gap-1 " role="toolbar" >
+      <app-like-button (btnClick)="likeChange()" [post]="post"></app-like-button>
+<!--      <button classList="{{getLikeButtonClasses()}}" id="like-button" (click)="likeChange()">{{post.likes}}  ⬆️</button>-->
+<!--      <button [classList]="getDislikeButtonClasses()" id="dislike-button" (click)="dislikeChange()">{{post.dislikes}}  ⬇️-->
+      <app-dislike-button (btnClick)="dislikeChange()" [post]="post"></app-dislike-button>
+<!--      </button>-->
+    </div>
   </div>
-  <div class="card-footer btn-toolbar gap-1" role="toolbar" >
-    <button classList="{{getLikeButtonClasses()}}" id="like-button" (click)="likeChange()">{{likes}}  ⬆️</button>
-    <button [classList]="getDislikeButtonClasses()" id="dislike-button" (click)="dislikeChange()">{{dislikes}}  ⬇️
-    </button>
-  </div>
-</div>
+
+
 

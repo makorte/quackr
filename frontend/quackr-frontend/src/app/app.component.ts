@@ -9,11 +9,6 @@ import {Post} from "../model/Post";
 })
 export class AppComponent {
 
-  openCreatePostForm() {
-    let dialog: HTMLElement | null = document.getElementById("create-post-dialog");
-    if (dialog){
-      (<HTMLDialogElement>dialog).showModal();
-    }
-  }
+
 }
 

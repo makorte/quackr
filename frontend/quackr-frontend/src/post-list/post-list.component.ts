@@ -26,11 +26,8 @@ export class PostListComponent {
     return this.posts.length == 0;
   }
 
-  postLikeChange(post: Post,  hasLiked: boolean) {
-    this.restService.postLikeChange(post, hasLiked);
-  }
-  postDisikeChange(post: Post,  hasDisliked: boolean) {
-    this.restService.postDislikeChange(post, hasDisliked);
+  postLikeChange(post: Post) {
+    this.restService.postLikeChange(post);
   }
 
   protected readonly onabort = onabort;

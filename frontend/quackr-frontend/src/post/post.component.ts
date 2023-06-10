@@ -1,56 +1,36 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {LikeStatus, Post} from "../model/Post";
+import {state} from "@angular/animations";
+import {User} from "../model/User";
 
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
-  styleUrls: ['./post.component.sass']
+  styleUrls: ['./post.component.sass'],
 })
 export class PostComponent {
 
-  @Input() text: string = "";
-  @Input() likes: number = 0;
-  @Input() hasLiked: boolean = false;
-  @Input() dislikes: number = 0;
-  @Input() hasDisliked: boolean = false;
+  @Input() post: Post = new Post("Lädt...", 0, 0 , LikeStatus.NONE, new User(-1, [],"","",""));
 
-  @Output() onLikeChange = new EventEmitter<boolean>();
-  @Output() onDislikeChange = new EventEmitter<boolean>();
+  @Output() onLikeStatusChange = new EventEmitter<Post>();
 
 
   likeChange() {
-    this.hasLiked = !this.hasLiked;
-
-    if (this.hasLiked) {
-      this.likes++;
-    } else {
-      this.likes--;
-    }
-    this.onLikeChange.emit(this.hasLiked);
-    if (this.hasLiked && this.hasDisliked) {
-      this.dislikeChange();
-    }
+    console.log("like change post comp")
+    this.post.likeChange();
+    this.onLikeStatusChange.emit(this.post);
   }
 
   dislikeChange() {
-    this.hasDisliked = !this.hasDisliked;
-
-    if (this.hasDisliked) {
-      this.dislikes++;
-    } else {
-      this.dislikes--;
-    }
-    this.onDislikeChange.emit(this.hasDisliked);
-
-    if (this.hasLiked && this.hasDisliked) {
-      this.likeChange();
-    }
+    this.post.dislikeChange();
+    this.onLikeStatusChange.emit(this.post);
   }
 
   getLikeButtonClasses() {
-    return this.hasLiked ? "liked btn" : "btn";
+    return this.post.hasLiked() ? "liked btn" : "btn";
   }
 
   getDislikeButtonClasses() {
-    return this.hasDisliked ? "disliked btn" : "likeButton btn";
+    return this.post.hasDisliked() ? "disliked btn" : "likeButton btn";
   }
 }

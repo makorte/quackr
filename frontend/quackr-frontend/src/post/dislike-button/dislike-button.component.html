@@ -1,0 +1,2 @@
+
+<button class="btn" id="like-button"  [@likeChange]="post.hasDisliked() ? 'liked' : 'none'" (click)="likeChange()">{{post.dislikes}}  ⬇️</button>

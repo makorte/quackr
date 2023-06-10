@@ -1,13 +1,8 @@
 <div class="container-fluid">
   <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-    <h1 class="display-2 user-select-none">🦆 quackr</h1>
+    <a href="/" class="text-decoration-none text-body">
+      <h1 class="display-2 user-select-none">🦆 quackr</h1>
+    </a>
   </header>
 </div>
-<app-post-list></app-post-list>
-<app-create-post-button (createPost)="openCreatePostForm()" ></app-create-post-button>
-<app-create-post-popup />
-<!--<app-post text="Post1"></app-post>-->
-<!--<app-post text="ipsajdaosjdowedna saonaudsiauwdkja sdiuadhsiabdbsa"></app-post>-->
-<!--<app-post text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam \n nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. "></app-post>-->
-<!--<app-post></app-post>-->
-<!--<app-post></app-post>-->
+<router-outlet/>

@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./posts-view.component.sass']
 })
 export class PostsViewComponent {
-
+  openCreatePostForm() {
+    let dialog: HTMLElement | null = document.getElementById("create-post-dialog");
+    if (dialog){
+      (<HTMLDialogElement>dialog).showModal();
+    }
+  }
 }

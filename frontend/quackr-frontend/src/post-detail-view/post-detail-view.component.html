@@ -1,0 +1,10 @@
+<div *ngIf="state == LoadingState.Loading" class="d-flex justify-content-center">
+  <span class="pe-3">Lade Post...</span>
+  <div class="spinner-border align-content-center" role="status">
+    <span class="visually-hidden text-md-center">Loading...</span>
+  </div>
+</div>
+
+<div *ngIf="state == LoadingState.Loaded && post != null">
+  <app-post [post]="post"></app-post>
+</div>

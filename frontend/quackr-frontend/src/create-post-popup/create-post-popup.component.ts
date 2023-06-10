@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {RestService} from "../rest.service";
-import {Post} from "../model/Post";
+import {LikeStatus, Post} from "../model/Post";
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-create-post-popup',
@@ -11,8 +12,10 @@ export class CreatePostPopupComponent {
   text: string = "";
   isError: boolean = false;
   private restService: RestService;
-  constructor(restService: RestService) {
+  private authService: AuthService;
+  constructor(restService: RestService, authService: AuthService) {
     this.restService = restService;
+    this.authService = authService;
   }
 
   closeDialog() {
@@ -25,10 +28,12 @@ export class CreatePostPopupComponent {
   }
 
   createPost() {
-    this.restService.createPost(new Post(this.text, 0 , 0))
+    // this.closeDialog();
+    this.authService.getCurrentUser()
+      .then(user =>  this.restService.createPost(new Post(this.text, 0, 0, LikeStatus.NONE, user)))
+      .catch(error => this.isError = true)
       .then((post) => this.closeDialog())
       .catch((error) => this.isError = true);
-    // this.closeDialog();
   }
 
   reset() {

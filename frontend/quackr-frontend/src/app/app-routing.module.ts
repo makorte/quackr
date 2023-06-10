@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {AppComponent} from "./app.component";
 import {PostsViewComponent} from "../posts-view/posts-view.component";
+import {PostDetailViewComponent} from "../post-detail-view/post-detail-view.component";
 
 const routes: Routes = [
-  {path: 'app', component: AppComponent, children: [
-      {path: "posts", component: PostsViewComponent }
+  {path: 'app', children: [
+      {path: "posts", component: PostsViewComponent },
+      {path: "post-details/:id", component: PostDetailViewComponent}
     ]},
   {path: "", redirectTo:"/app/posts", pathMatch: 'full'}
 ];

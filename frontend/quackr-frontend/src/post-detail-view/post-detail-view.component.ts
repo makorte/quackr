@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Post} from "../model/Post";
 import {RestService} from "../rest.service";
@@ -10,6 +10,7 @@ import {RestService} from "../rest.service";
 })
 export class PostDetailViewComponent {
   public post: Post|null = null;
+
   state: LoadingState = LoadingState.Loading;
 
   constructor(private router: Router, private route : ActivatedRoute, restService: RestService) {
@@ -35,6 +36,9 @@ export class PostDetailViewComponent {
     });
   }
 
+  backToOverview() {
+    this.router.navigate(["app", "posts"])
+  }
   protected readonly LoadingState = LoadingState;
 }
 

@@ -8,6 +8,7 @@ export class Post {
   public likeStatus: LikeStatus;
   public id: number|null;
   public ersteller: User;
+  public erstellungsDatum: string = "10.06.2023 23:52";
 
 
   constructor(message: string, likes: number, dislikes: number, likeStatus: LikeStatus,ersteller: User, id: number|null = null, imageLink: string | null = null) {

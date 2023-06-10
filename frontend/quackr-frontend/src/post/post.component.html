@@ -1,20 +1,28 @@
 
   <div id="post-div" class="col card">
-    <div *ngIf="post.imageLink != null" class="">
-      <img  src="/assets/katze.jpg" class="card-img-top  object-fit-contain border rounded postImage"   alt="..."/>
+    <div  class="">
+      <ng-content />
+      <div>
+        <img src="{{post.ersteller.userIconLink}}" class="rounded-circle p-1" width="50" height="50">
+        <span>{{post.ersteller.name}}</span>
+      </div>
+      <img  *ngIf="post.imageLink != null" src="/assets/katze.jpg" class="card-img-top  object-fit-contain border rounded postImage"   alt="..."/>
     </div>
     <div class="card-body">
-      <a routerLink="/app/post-details/{{post.id}}" class="text-decoration-none">
+      <a *ngIf="enableLinks" routerLink="/app/post-details/{{post.id}}" class="text-decoration-none">
           <p id="post-text" class="text-body">{{post.message}}</p>
       </a>
+      <p *ngIf="!enableLinks" id="post-text-2" class="text-body">{{post.message}}</p>
     </div>
-    <div class="card-footer btn-toolbar gap-1 " role="toolbar" >
-      <app-like-button (btnClick)="likeChange()" [post]="post"></app-like-button>
-<!--      <button classList="{{getLikeButtonClasses()}}" id="like-button" (click)="likeChange()">{{post.likes}}  ⬆️</button>-->
-<!--      <button [classList]="getDislikeButtonClasses()" id="dislike-button" (click)="dislikeChange()">{{post.dislikes}}  ⬇️-->
-      <app-dislike-button (btnClick)="dislikeChange()" [post]="post"></app-dislike-button>
-<!--      </button>-->
+    <div class="card-footer">
+      <div class="btn-toolbar gap-1 " role="toolbar" >
+        <app-like-button (btnClick)="likeChange()" [post]="post"></app-like-button>
+        <app-dislike-button (btnClick)="dislikeChange()" [post]="post"></app-dislike-button>
+      </div>
+      <span class="text-body-secondary p-2">{{post.erstellungsDatum}}</span>
+      <button *ngIf="enableLinks" class="btn btn-outline-light float-end" (click)="toPostDetail()">-></button>
     </div>
+
   </div>
 
 

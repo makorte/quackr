@@ -11,8 +11,7 @@ import {User} from "./model/User";
  */
 export class RestService {
 
-  constructor() {
-  }
+
 
 
   private users = [
@@ -21,20 +20,24 @@ export class RestService {
   ];
 
   private posts = [
-    new Post("Post 1 \n Das ist ein sehr wichtiger Post", 1, 2, LikeStatus.NONE,this.users[0], 1, "/katze.jpg"),
+    new Post("Post 1 \n Das ist ein sehr wichtiger Post", 1, 2, LikeStatus.NONE,this.users[0], 1, null,  "/katze.jpg"),
     new Post("Post 2 \n Das ist ein sehr wichtiger Post", 0, 0, LikeStatus.NONE,this.users[1], 2),
     new Post("Post 3 \n Das ist ein sehr wichtiger Post", 0, 9, LikeStatus.NONE,this.users[0], 3),
-    new Post("Post 1 \n Das ist ein sehr wichtiger Post", 1, 2, LikeStatus.NONE,this.users[0], 4),
-    new Post("Post 2 \n Das ist ein sehr wichtiger Post", 0, 0, LikeStatus.NONE,this.users[0], 5),
-    new Post("Post 3 \n Das ist ein sehr wichtiger Post", 0, 9, LikeStatus.NONE,this.users[0], 6),
-    new Post("Post 1 \n Das ist ein sehr wichtiger Post", 1, 2, LikeStatus.LIKED,this.users[0], 7),
-    new Post("Post 2 \n Das ist ein sehr wichtiger Post", 0, 0, LikeStatus.NONE,this.users[0], 8),
-    new Post("Post 3 \n Das ist ein sehr wichtiger Post", 0, 9, LikeStatus.DISLIKED,this.users[0], 9),
-    new Post("Post 1 \n Das ist ein sehr wichtiger Post", 1, 2, LikeStatus.NONE,this.users[0], 10),
-    new Post("Post 2 \n Das ist ein sehr wichtiger Post", 0, 0, LikeStatus.NONE,this.users[0], 11),
-    new Post("Post 3 \n Das ist ein sehr wichtiger Post", 0, 9, LikeStatus.NONE,this.users[0], 12),
-    new Post("Post 4 \n Das ist ein sehr wichtiger Post", 6468, 647968, LikeStatus.NONE,this.users[0], 13)];
+    new Post("Post 12 \n Das ist ein sehr wichtiger Post", 1, 2, LikeStatus.NONE,this.users[0], 4),
+    new Post("Post 22 \n Das ist ein sehr wichtiger Post", 0, 0, LikeStatus.NONE,this.users[0], 5),
+    new Post("Post 32 \n Das ist ein sehr wichtiger Post", 0, 9, LikeStatus.NONE,this.users[0], 6),
+    new Post("Post 13 \n Das ist ein sehr wichtiger Post", 1, 2, LikeStatus.LIKED,this.users[0], 7),
+    new Post("Post 23 \n Das ist ein sehr wichtiger Post", 0, 0, LikeStatus.NONE,this.users[0], 8),
+    new Post("Post 33 \n Das ist ein sehr wichtiger Post", 0, 9, LikeStatus.DISLIKED,this.users[0], 9),
+    new Post("Post 14 \n Das ist ein sehr wichtiger Post", 1, 2, LikeStatus.NONE,this.users[0], 10),
+    new Post("Post 24 \n Das ist ein sehr wichtiger Post", 0, 0, LikeStatus.NONE,this.users[0], 11),
+    new Post("Post 34 \n Das ist ein sehr wichtiger Post", 0, 9, LikeStatus.NONE,this.users[0], 12),
+    new Post("Post 44 \n Das ist ein sehr wichtiger Post", 6468, 647968, LikeStatus.NONE,this.users[0], 13)];
 
+  constructor() {
+    this.posts[3].kommentarVon = this.posts[7];
+    this.posts[4].kommentarVon = this.posts[7];
+  }
   public loadUser(id: number): Promise<User> {
     return new Promise((resolve, reject) => {
       if (this.users.length >= id) {
@@ -48,9 +51,8 @@ export class RestService {
    * Fragt die Posts vom Server an und gibt diese zurück. Vielleicht gibt er später ein Subject zurück.
    */
   public loadPosts(): Promise<Post[]> {
-    return new Promise((resolve) => resolve(this.posts));
+    return new Promise((resolve) => resolve(this.posts.filter(value => value.kommentarVon == null)));
   }
-
 
 
   public loadPost(id: number): Promise<Post> {
@@ -61,6 +63,16 @@ export class RestService {
         }
       }
       reject("Post nicht gefunden");
+    });
+  }
+
+  public loadKommentare(id: number): Promise<Post[]> {
+    return new Promise((resolve) => {
+      let kommentare: Post[] = [];
+      this.posts.forEach(value => {
+        if (value.kommentarVon != null && value.kommentarVon.id == id) kommentare.push(value);
+      })
+      resolve(kommentare);
     });
   }
 

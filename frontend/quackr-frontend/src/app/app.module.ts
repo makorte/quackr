@@ -16,6 +16,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {LikeButtonComponent} from "../post/like-button/like-button.component";
 import {DislikeButtonComponent} from "../post/dislike-button/dislike-button.component";
 import {AuthService} from "../auth.service";
+import {PostThreadListComponent} from "../post-detail-view/post-thread-list/post-thread-list.component";
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {AuthService} from "../auth.service";
     CreatePostPopupComponent,
     PostDetailViewComponent,
     LikeButtonComponent,
-    DislikeButtonComponent
+    DislikeButtonComponent,
+    PostThreadListComponent
   ],
   imports: [
     BrowserModule,

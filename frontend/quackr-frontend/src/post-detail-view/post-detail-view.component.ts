@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 import {Post} from "../model/Post";
 import {RestService} from "../rest.service";
 
@@ -17,8 +17,7 @@ export class PostDetailViewComponent {
 
     this.route.params.subscribe({
       next: params => {
-        console.log(params["id"]);
-      const id = Number(params["id"]);
+        const id = Number(params["id"]);
         if (isNaN(id)) {
           this.router.navigate(["app", "posts"]);
         }else {
@@ -37,7 +36,11 @@ export class PostDetailViewComponent {
   }
 
   backToOverview() {
-    this.router.navigate(["app", "posts"])
+
+    let frag = this.post == null ? '' : this.post.id == null ? '' : this.post.id.toString();
+    this.router.navigate(["app", "posts"], {
+      fragment: frag
+    })
   }
   protected readonly LoadingState = LoadingState;
 }

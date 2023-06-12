@@ -1,7 +1,13 @@
+<a id="post-{{post.id}}" [routerLink]='"."'
+   class="scroll-gap"
+   [href]="'.#'+post == null ? '' : post.id == null ? '' : post.id.toString()"
+   [fragment]="post.id == null ? '' : post.id.toString()"></a>
+  <div id="post-div" class="col card back {{enableLinks ? '' : 'background-selected'}}">
 
-  <div id="post-div" class="col card">
-    <div  class="">
-      <ng-content />
+    <div  class="vstack gap-1">
+      <div *ngIf="post.kommentarVon != null" class="z-1 ps-4">
+        <div class="vr vl"></div>
+      </div>
       <div>
         <img src="{{post.ersteller.userIconLink}}" class="rounded-circle p-1" width="50" height="50">
         <span>{{post.ersteller.name}}</span>

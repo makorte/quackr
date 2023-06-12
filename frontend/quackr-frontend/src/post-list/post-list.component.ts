@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {RestService} from "../rest.service";
 import {Post} from "../model/Post";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-post-list',
@@ -11,15 +12,29 @@ export class PostListComponent {
   private restService: RestService;
 
   public posts: Post[] = [];
+  private activeRoute: ActivatedRoute;
 
-  constructor(restService: RestService) {
+  constructor(restService: RestService, activeRoute: ActivatedRoute) {
     this.restService = restService;
+    this.activeRoute = activeRoute;
     this.loadPosts();
   }
 
   loadPosts() {
     let result = this.restService.loadPosts();
-    result.then(value => this.posts = value);
+    result.then(value => {
+      this.posts = value
+      setTimeout(()  => {
+        this.activeRoute.fragment.subscribe(value => {
+          let element = document.getElementById("post-"+value);
+          if (element == null) return;
+          element.scrollIntoView({
+            block: "start"
+          });
+        })
+      },10)
+
+    });
   }
 
   noPostsLoaded(): boolean {

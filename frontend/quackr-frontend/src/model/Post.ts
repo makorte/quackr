@@ -1,6 +1,7 @@
 import {User} from "./User";
 
 export class Post {
+  public kommentarVon: Post|null = null;
   public message: string;
   public likes: number;
   public dislikes: number;
@@ -11,13 +12,14 @@ export class Post {
   public erstellungsDatum: string = "10.06.2023 23:52";
 
 
-  constructor(message: string, likes: number, dislikes: number, likeStatus: LikeStatus,ersteller: User, id: number|null = null, imageLink: string | null = null) {
+  constructor(message: string, likes: number, dislikes: number, likeStatus: LikeStatus,ersteller: User, id: number|null = null, kommentarVon: Post|null = null, imageLink: string | null = null) {
     this.message = message;
     this.likes = likes;
     this.dislikes = dislikes;
     this.likeStatus = likeStatus;
     this.imageLink = imageLink;
     this.id = id;
+    this.kommentarVon = kommentarVon;
     this.ersteller = ersteller;
     ersteller.posts.unshift(this);
   }

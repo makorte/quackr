@@ -6,6 +6,7 @@
 </div>
 
 <div *ngIf="state == LoadingState.Loaded && post != null">
-
-  <app-post [post]="post" [enableLinks]="false"> <button type="button" class="btn-close" aria-label="Close" (click)="backToOverview()"></button></app-post>
+  <button type="button" class="btn-close p-4" aria-label="Close" (click)="backToOverview()"></button>
+  <app-post-thread-list [post]="post"></app-post-thread-list>
+<!--  <app-post [post]="post" [enableLinks]="false"> <button type="button" class="btn-close" aria-label="Close" (click)="backToOverview()"></button></app-post>-->
 </div>

@@ -15,7 +15,7 @@
       <img  *ngIf="post.imageLink != null" src="/assets/katze.jpg" class="card-img-top  object-fit-contain border rounded postImage"   alt="..."/>
     </div>
     <div class="card-body">
-      <a *ngIf="enableLinks" routerLink="/app/post-details/{{post.id}}" class="text-decoration-none">
+      <a *ngIf="enableLinks" [routerLink]="'/app/post-details/'+post.id" [fragment]="post.id+''" class="text-decoration-none">
           <p id="post-text" class="text-body">{{post.message}}</p>
       </a>
       <p *ngIf="!enableLinks" id="post-text-2" class="text-body">{{post.message}}</p>

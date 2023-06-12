@@ -25,6 +25,16 @@ export class PostDetailViewComponent {
             .then(post =>{
               this.post = post;
               this.state = LoadingState.Loaded;
+              setTimeout(()  => {
+                this.route.fragment.subscribe(value => {
+                  let element = document.getElementById("post-"+value);
+                  if (element == null) return;
+                  element.scrollIntoView({
+                    block: "start",
+                    behavior: "smooth"
+                  });
+                })
+              },10)
             })
             .catch(err => {
               this.state = LoadingState.Error;
@@ -36,8 +46,8 @@ export class PostDetailViewComponent {
   }
 
   backToOverview() {
-
     let frag = this.post == null ? '' : this.post.id == null ? '' : this.post.id.toString();
+
     this.router.navigate(["app", "posts"], {
       fragment: frag
     })

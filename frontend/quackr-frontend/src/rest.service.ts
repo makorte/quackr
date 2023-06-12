@@ -35,8 +35,9 @@ export class RestService {
     new Post("Post 44 \n Das ist ein sehr wichtiger Post", 6468, 647968, LikeStatus.NONE,this.users[0], 13)];
 
   constructor() {
-    this.posts[3].kommentarVon = this.posts[7];
-    this.posts[4].kommentarVon = this.posts[7];
+    this.posts[3].kommentarVon = this.posts[2];
+    this.posts[4].kommentarVon = this.posts[2];
+    this.posts[7].kommentarVon = this.posts[3];
   }
   public loadUser(id: number): Promise<User> {
     return new Promise((resolve, reject) => {

@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {LikeStatus, Post} from "../model/Post";
-import {state} from "@angular/animations";
 import {User} from "../model/User";
 import {Router} from "@angular/router";
 
@@ -16,7 +15,7 @@ export class PostComponent {
     this.router = router;
   }
 
-  @Input() post: Post = new Post("Lädt...", 0, 0 , LikeStatus.NONE, new User(-1, [],"","",""));
+  @Input() post: Post = new Post("Lädt...", 0, 0, LikeStatus.NONE, new User(-1, [], "", "", ""));
   @Input() enableLinks: boolean = true;
 
   @Output() onLikeStatusChange = new EventEmitter<Post>();
@@ -34,6 +33,10 @@ export class PostComponent {
   }
 
   toPostDetail() {
-    this.router.navigate(["app","post-details",this.post.id]);
+    let frag = this.post == null ? '' : this.post.id == null ? '' : this.post.id.toString();
+
+    this.router.navigate(["app", "post-details", this.post.id], {
+      fragment: frag
+    });
   }
 }

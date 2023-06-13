@@ -17,6 +17,7 @@ import {LikeButtonComponent} from "../post/like-button/like-button.component";
 import {DislikeButtonComponent} from "../post/dislike-button/dislike-button.component";
 import {AuthService} from "../auth.service";
 import {PostThreadListComponent} from "../post-detail-view/post-thread-list/post-thread-list.component";
+import {SideMenuComponent} from "../side-menu/side-menu.component";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {PostThreadListComponent} from "../post-detail-view/post-thread-list/post
     PostDetailViewComponent,
     LikeButtonComponent,
     DislikeButtonComponent,
-    PostThreadListComponent
+    PostThreadListComponent,
+    SideMenuComponent
   ],
   imports: [
     BrowserModule,

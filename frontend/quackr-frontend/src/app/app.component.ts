@@ -9,6 +9,10 @@ import {Post} from "../model/Post";
 })
 export class AppComponent {
 
+  public showSidebar = false;
 
+  showSideBar() {
+    this.showSidebar = !this.showSidebar;
+  }
 }
 

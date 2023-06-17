@@ -3,6 +3,8 @@ import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 import {Post} from "../model/Post";
 import {RestService} from "../rest.service";
 import {LoadingState} from "../model/LoadingState";
+import {openCreatePostForm} from "../openCreatePostForm";
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-post-detail-view',
@@ -11,10 +13,15 @@ import {LoadingState} from "../model/LoadingState";
 })
 export class PostDetailViewComponent {
   public post: Post|null = null;
+  kommentarVon: Post|null = null;
 
   state: LoadingState = LoadingState.Loading;
 
-  constructor(private router: Router, private route : ActivatedRoute, restService: RestService) {
+  reloadFunction: () => void = () => { console.log("Default detail view")};
+  private authService: AuthService;
+
+  constructor(private router: Router, private route : ActivatedRoute, restService: RestService, authService: AuthService) {
+    this.authService = authService;
 
     this.route.params.subscribe({
       next: params => {
@@ -54,6 +61,26 @@ export class PostDetailViewComponent {
     })
   }
 
+  openKommentarDialog(post: Post) {
+    this.kommentarVon = post;
+    let dialog: HTMLElement | null = document.getElementById("create-post-dialog");
+    if (dialog) {
+      (<HTMLDialogElement>dialog).showModal();
+    }
+  }
+  setReload(reloadFunction: () => void) {
+    this.reloadFunction = reloadFunction;
+  }
   protected readonly LoadingState = LoadingState;
+  protected readonly openCreatePostForm = openCreatePostForm;
+
+  isAuth() {
+    return this.authService.isAuthenticated();
+  }
+
+  openCreatePostDialog() {
+    this.kommentarVon = null;
+    openCreatePostForm();
+  }
 }
 

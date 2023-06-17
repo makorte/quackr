@@ -1,9 +1,11 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {RestService} from "../../rest.service";
-import {User} from "../../model/User";
-import {LoadingState} from "../../model/LoadingState";
-import {Post} from "../../model/Post";
+import {RestService} from "../rest.service";
+import {User} from "../model/User";
+import {LoadingState} from "../model/LoadingState";
+import {Post} from "../model/Post";
+import {openCreatePostForm} from "../openCreatePostForm";
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-user-view',
@@ -16,11 +18,14 @@ export class UserViewComponent {
   restService: RestService;
   route: ActivatedRoute;
   router: Router;
+  private authService: AuthService;
+  post: Post|null = null;
 
-  constructor(router: Router, route: ActivatedRoute, restService: RestService) {
+  constructor(router: Router, route: ActivatedRoute, restService: RestService, authService: AuthService) {
     this.restService = restService;
     this.route = route;
     this.router = router;
+    this.authService = authService;
 
     this.route.params.subscribe({
       next: params => {
@@ -74,4 +79,25 @@ export class UserViewComponent {
   }
 
   protected readonly LoadingState = LoadingState;
+  protected readonly openCreatePostForm = openCreatePostForm;
+  reloadFunction: () => void = () => console.log("Default User View");
+  setReload(reloadFunction: () => void) {
+    this.reloadFunction = () => {
+      this.post = null;
+      reloadFunction();
+    }
+  }
+  isAuth() {
+    return this.authService.isAuthenticated();
+  }
+
+  openKommentarDialog(post: Post) {
+    this.post = post;
+    openCreatePostForm();
+  }
+
+  openCreatePostDialog() {
+    this.post = null;
+    openCreatePostForm();
+  }
 }

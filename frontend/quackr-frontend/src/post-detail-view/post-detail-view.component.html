@@ -7,6 +7,8 @@
 
 <div *ngIf="state == LoadingState.Loaded && post != null">
   <button type="button" class="btn-close p-4" aria-label="Close" (click)="backToOverview()"></button>
-  <app-post-thread-list [post]="post"></app-post-thread-list>
+  <app-post-thread-list [post]="post" (onOpenKommentarDialog)="openKommentarDialog($event)" (reloadFunction)="setReload($event)"/>
 <!--  <app-post [post]="post" [enableLinks]="false"> <button type="button" class="btn-close" aria-label="Close" (click)="backToOverview()"></button></app-post>-->
 </div>
+<app-create-post-popup [kommentarVon]="kommentarVon" [reloadFunction]="reloadFunction"></app-create-post-popup>
+<app-create-post-button *ngIf="isAuth()" (createPost)="openCreatePostDialog()"/>

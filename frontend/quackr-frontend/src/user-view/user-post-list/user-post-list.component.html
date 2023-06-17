@@ -4,6 +4,7 @@
     <app-post *ngFor="let post of posts;"
               [post]="post"
               (onLikeStatusChange)="postLikeChange(post)"
+              (onOpenKommentarDialog)="openKommentarDialog($event)"
     >
     </app-post>
   </div>

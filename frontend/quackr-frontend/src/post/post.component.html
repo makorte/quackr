@@ -16,8 +16,8 @@
       </a>
 
     </div>
-    <img *ngIf="post.imageLink != null" src="/assets/katze.jpg"
-         class="card-img-top  object-fit-contain border rounded postImage" alt="..."/>
+    <img *ngIf="post.imageLink != null" src="{{post.imageLink}}"
+         class="card-img-top  object-fit-contain border rounded postImage " alt="..."/>
   </div>
   <div class="card-body">
     <a *ngIf="enableLinks" [routerLink]="'/app/post-details/'+post.id" [fragment]="post.id+''"
@@ -27,15 +27,27 @@
     <p *ngIf="!enableLinks" id="post-text-2" class="text-body">{{post.message}}</p>
   </div>
   <div class="card-footer">
-    <div class="btn-toolbar gap-1 " role="toolbar">
-      <app-like-button (btnClick)="likeChange()" [post]="post"></app-like-button>
-      <app-dislike-button (btnClick)="dislikeChange()" [post]="post"></app-dislike-button>
+    <div class="container-fluid">
+      <div class="row align-items-start text-start">
+        <div class="col">
+          <div class="btn-toolbar gap-1 " role="toolbar">
+            <app-like-button (btnClick)="likeChange()" [post]="post"></app-like-button>
+            <app-dislike-button (btnClick)="dislikeChange()" [post]="post"></app-dislike-button>
+          </div>
+          <span class="text-body-secondary p-2">{{post.erstellungsDatum}}</span>
+          <button *ngIf="enableLinks" class="btn btn-outline-light float-end" (click)="toPostDetail()">-></button>
+        </div>
+      <div class="col"></div>
+      <div class="col align-content-end align-items-end text-end">
+        <button class="btn btn-outline-light fs-2" (click)="openKommentarDialog()">💬</button>
+      </div>
+      </div>
     </div>
-    <span class="text-body-secondary p-2">{{post.erstellungsDatum}}</span>
-    <button *ngIf="enableLinks" class="btn btn-outline-light float-end" (click)="toPostDetail()">-></button>
+
   </div>
 
 </div>
+
 
 
 

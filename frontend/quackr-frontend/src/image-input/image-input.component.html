@@ -1,9 +1,9 @@
 <div class="container row">
   <p class="lead">Foto Hochladen</p>
   <div class="col-7">
-    <input type="file" id="imageDrop" class="form-control">
+    <input type="file" id="imageDrop" class="form-control" [(ngModel)]="fileToUpload" (ngModelChange)="file.emit(fileToUpload)">
   </div>
   <div class="col">
-    <input id="urlInput" type="text" class="form-control" placeholder="Oder Url angeben">
+    <input id="urlInput" type="text" class="form-control" placeholder="Oder Url angeben" [(ngModel)]="urlString" (ngModelChange)="url.emit(urlString)">
   </div>
 </div>

@@ -2,10 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import {PostComponent} from "../post/post.component";
 import {RestService} from "../rest.service";
-import {PostListComponent} from "../post-list/post-list.component";
+import {PostListComponent} from "../posts-view/post-list/post-list.component";
 import {CreatePostButtonComponent} from "../create-post-button/create-post-button.component";
 import {PostsViewComponent} from "../posts-view/posts-view.component";
 import {CreatePostPopupComponent} from "../create-post-popup/create-post-popup.component";
@@ -16,8 +15,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {LikeButtonComponent} from "../post/like-button/like-button.component";
 import {DislikeButtonComponent} from "../post/dislike-button/dislike-button.component";
 import {AuthService} from "../auth.service";
-import {UserViewComponent} from "../posts-view/user-view/user-view.component";
-import {UserPostListComponent} from "../posts-view/user-view/user-post-list/user-post-list.component";
+import {UserViewComponent} from "../user-view/user-view.component";
+import {UserPostListComponent} from "../user-view/user-post-list/user-post-list.component";
 import {PostThreadListComponent} from "../post-detail-view/post-thread-list/post-thread-list.component";
 import {UserMenuComponent} from "../user-menu/user-menu.component";
 import {LogInViewComponent} from "../log-in-view/log-in-view.component";
@@ -25,6 +24,7 @@ import {RegisterViewComponent} from "../register-view/register-view.component";
 import {ImageInputComponent} from "../image-input/image-input.component";
 import {SideMenuComponent} from "../side-menu/side-menu.component";
 import {SideMenuButtonComponent} from "../side-menu-button/side-menu-button.component";
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [

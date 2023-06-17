@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {LikeStatus, Post} from "../../model/Post";
 import {User} from "../../model/User";
 import {RestService} from "../../rest.service";
@@ -9,9 +9,12 @@ import {LoadingState} from "../../model/LoadingState";
   templateUrl: './post-thread-list.component.html',
   styleUrls: ['./post-thread-list.component.sass']
 })
-export class PostThreadListComponent implements OnChanges{
+export class PostThreadListComponent implements OnInit, OnChanges{
 
   @Input() post: Post = new Post("",0,0,LikeStatus.NONE, new User(-1, [], "", "",""));
+  @Output() onOpenKommentarDialog = new EventEmitter<Post>();
+  @Output() reloadFunction = new EventEmitter<() => void>();
+
   private restService: RestService;
   public state: LoadingState = LoadingState.Loading;
   public kommentare: Post[] = [];
@@ -21,7 +24,19 @@ export class PostThreadListComponent implements OnChanges{
     this.restService = restService;
   }
 
-  ngOnChanges() {
+  ngOnInit(): void {
+    this.reloadFunction.emit(() => {
+      console.log("reload Thread")
+      this.ngOnChanges()
+    });
+  }
+
+  public ngOnChanges() {
+    this.reloadFunction.emit(() => {
+      console.log("reload Thread")
+      this.ngOnChanges()
+    });
+
     this.thread = [];
     this.kommentare = [];
     console.log("Thread von:"+this.post.id);
@@ -45,6 +60,13 @@ export class PostThreadListComponent implements OnChanges{
       });
 
   }
+  openKommentarDialog(post: Post) {
+    console.log("open Create Kommentar Post Thread")
+    this.onOpenKommentarDialog.emit(post);
+  }
+
 
   protected readonly LoadingState = LoadingState;
+
+
 }

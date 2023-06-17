@@ -20,7 +20,7 @@ export class RestService  implements OnInit, OnDestroy{
   ];
 
   private posts = [
-    new Post("Post 1 \n Das ist ein sehr wichtiger Post", 1, 2, LikeStatus.NONE,this.users[0], 1, null,  "/katze.jpg"),
+    new Post("Post 1 \n Das ist ein sehr wichtiger Post", 1, 2, LikeStatus.NONE,this.users[0], 1, null,  "/assets/katze.jpg"),
     new Post("Post 2 \n Das ist ein sehr wichtiger Post", 0, 0, LikeStatus.NONE,this.users[1], 2),
     new Post("Post 3 \n Das ist ein sehr wichtiger Post", 0, 9, LikeStatus.NONE,this.users[0], 3),
     new Post("Post 12 \n Das ist ein sehr wichtiger Post", 1, 2, LikeStatus.NONE,this.users[0], 4),

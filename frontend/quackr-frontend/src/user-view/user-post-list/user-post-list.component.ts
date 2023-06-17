@@ -1,19 +1,20 @@
-import {Component} from '@angular/core';
-import {RestService} from "../../../rest.service";
-import {Post} from "../../../model/Post";
-import {User} from "../../../model/User";
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {RestService} from "../../rest.service";
+import {Post} from "../../model/Post";
+import {User} from "../../model/User";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Err, ErrorCodes, OK} from "../../../model/Result";
 
 @Component({
   selector: 'app-user-post-list',
   templateUrl: './user-post-list.component.html',
   styleUrls: ['./user-post-list.component.sass']
 })
-export class UserPostListComponent {
+export class UserPostListComponent implements OnInit{
   private restService: RestService;
 
   public posts: Post[] = [];
+  @Output() reloadFunction = new EventEmitter<() => void>();
+  @Output() onOpenKommentarDialog = new EventEmitter<Post>();
 
   route: ActivatedRoute;
   router: Router;
@@ -46,33 +47,6 @@ export class UserPostListComponent {
       );
   }
 
-// loadPosts() {
-//   let lUser: User = new User(-1, [], "", "", "");
-//
-//   let result =
-//     this.route.params.subscribe({
-//       next: params => {
-//         const id = Number(params["id"]);
-//         if (isNaN(id)) {
-//           reject("No User ID")
-//         } else {
-//           this.restService.loadUser(id)
-//             .then(user => {
-//               lUser = user;
-//               resolve(user.posts)
-//             })
-//             .catch(err => {
-//               lUser = new User(-1, [], "", "", "");
-//               reject("Rest Service");
-//             })
-//           ;
-//         }
-//       }
-//     });
-//   };
-//   result.then(value => this.posts = value);
-// }
-
 
 
 
@@ -85,4 +59,12 @@ export class UserPostListComponent {
   }
 
   protected readonly onabort = onabort;
+
+  ngOnInit(): void {
+    this.reloadFunction.emit(this.loadPosts);
+  }
+
+  openKommentarDialog(post: Post) {
+    this.onOpenKommentarDialog.emit(post);
+  }
 }

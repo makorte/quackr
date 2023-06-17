@@ -20,6 +20,7 @@ export class PostComponent {
 
   @Output() onLikeStatusChange = new EventEmitter<Post>();
 
+  @Output() onOpenKommentarDialog = new EventEmitter<Post>();
 
   likeChange() {
     console.log("like change post comp")
@@ -38,5 +39,10 @@ export class PostComponent {
     this.router.navigate(["app", "post-details", this.post.id], {
       fragment: frag
     });
+  }
+
+  openKommentarDialog() {
+    console.log("open CreateKommentar")
+    this.onOpenKommentarDialog.emit(this.post);
   }
 }

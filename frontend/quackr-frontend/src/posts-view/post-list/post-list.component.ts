@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {RestService} from "../rest.service";
-import {Post} from "../model/Post";
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {RestService} from "../../rest.service";
+import {Post} from "../../model/Post";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
@@ -8,11 +8,14 @@ import {ActivatedRoute} from "@angular/router";
   templateUrl: './post-list.component.html',
   styleUrls: ['./post-list.component.sass']
 })
-export class PostListComponent {
+export class PostListComponent implements OnInit{
   private restService: RestService;
 
   public posts: Post[] = [];
   private activeRoute: ActivatedRoute;
+
+  @Output() onOpenKommentarDialog = new EventEmitter<Post>();
+  @Output() reloadFunction = new EventEmitter<() => void>();
 
   constructor(restService: RestService, activeRoute: ActivatedRoute) {
     this.restService = restService;
@@ -46,4 +49,13 @@ export class PostListComponent {
   }
 
   protected readonly onabort = onabort;
+
+  openKommentarDialog(post: Post) {
+    console.log("open Create Kommentar Post List")
+    this.onOpenKommentarDialog.emit(post);
+  }
+
+  ngOnInit(): void {
+    this.reloadFunction.emit(this.loadPosts);
+  }
 }

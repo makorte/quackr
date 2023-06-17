@@ -11,7 +11,7 @@
     <app-post [post]="tPost"/>
   </div>
   <hr>
-  <app-post [post]="post" [enableLinks]="false"><ng-content/></app-post>
+  <app-post [post]="post" [enableLinks]="false" (onOpenKommentarDialog)="openKommentarDialog($event)"><ng-content/></app-post>
   <hr>
   <div *ngFor="let kommentar of kommentare;">
     <app-post [post]="kommentar"/>

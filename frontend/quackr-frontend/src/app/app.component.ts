@@ -1,22 +1,23 @@
-import {Component} from '@angular/core';
-import {AuthService} from "../auth.service";
-import {User} from "../model/User";
-import {ChildrenOutletContexts} from "@angular/router";
+import {Component} from "@angular/core";
 import {slideInAnimation} from "../transition";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {AuthService} from "../auth.service";
+import {ChildrenOutletContexts} from "@angular/router";
+import {User} from "../model/User";
+import {openCreatePostForm} from "../openCreatePostForm";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass'],
   animations: [slideInAnimation, trigger('flyInOut', [
-    state('in', style({ transform: 'translateX(0)' })),
+    state('in', style({transform: 'translateX(0)'})),
     transition('void => *', [
-      style({ transform: 'translateX(200%)' }),
+      style({transform: 'translateX(200%)'}),
       animate('160ms ease-in-out')
     ]),
     transition('* => void', [
-      animate('160ms ease-in-out', style({ transform: 'translateX(100%)' }))
+      animate('160ms ease-in-out', style({transform: 'translateX(100%)'}))
     ])
   ])],
 
@@ -27,6 +28,7 @@ export class AppComponent {
   public showSidebar = false;
 
   private user: User | null = null;
+
 
   private contexts: ChildrenOutletContexts;
 
@@ -45,12 +47,13 @@ export class AppComponent {
     return authenticated;
   }
 
-  hasUser(){
+  hasUser() {
     return this.user != null;
   }
-   getUser() {
+
+  getUser() {
     return this.user;
-   }
+  }
 
   protected readonly Promise = Promise;
   protected readonly User = User;
@@ -59,5 +62,7 @@ export class AppComponent {
   getRouteAnimationData() {
     return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];
   }
-}
 
+
+  protected readonly openCreatePostForm = openCreatePostForm;
+}

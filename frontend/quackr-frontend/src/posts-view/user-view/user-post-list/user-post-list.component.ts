@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
-import {RestService} from "../../rest.service";
-import {Post} from "../../model/Post";
-import {User} from "../../model/User";
+import {RestService} from "../../../rest.service";
+import {Post} from "../../../model/Post";
+import {User} from "../../../model/User";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Err, ErrorCodes, OK} from "../../model/Result";
+import {Err, ErrorCodes, OK} from "../../../model/Result";
 
 @Component({
   selector: 'app-user-post-list',

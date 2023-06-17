@@ -24,6 +24,7 @@ import {LogInViewComponent} from "../log-in-view/log-in-view.component";
 import {RegisterViewComponent} from "../register-view/register-view.component";
 import {ImageInputComponent} from "../image-input/image-input.component";
 import {SideMenuComponent} from "../side-menu/side-menu.component";
+import {SideMenuButtonComponent} from "../side-menu-button/side-menu-button.component";
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import {SideMenuComponent} from "../side-menu/side-menu.component";
     SideMenuComponent,
     UserViewComponent,
     UserPostListComponent,
-    UserMenuComponent
+    UserMenuComponent,
+    SideMenuButtonComponent
   ],
   imports: [
     BrowserModule,

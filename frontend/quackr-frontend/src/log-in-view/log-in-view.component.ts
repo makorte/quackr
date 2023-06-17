@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../auth.service";
+import {LoadingState} from "../model/LoadingState";
 
 @Component({
   selector: 'app-log-in-view',
@@ -10,6 +11,7 @@ import {AuthService} from "../auth.service";
 export class LogInViewComponent {
   private router: Router;
   private authService: AuthService;
+   loginState: LoadingState|null = null;
 
   constructor(router: Router, authService: AuthService) {
     this.router = router;
@@ -17,6 +19,18 @@ export class LogInViewComponent {
   }
 
   onLogIn() {
-    this.router.navigate(["app", "posts"]);
+    this.loginState = LoadingState.Loading;
+    this.authService.login()
+      .then(erfolgreich => {
+        if (erfolgreich) {
+          this.loginState = LoadingState.Loaded;
+          this.router.navigate(["app", "posts"]);
+          console.log("login")
+        } else {
+          this.loginState = LoadingState.Error;
+        }
+      })
   }
+
+  protected readonly LoadingState = LoadingState;
 }

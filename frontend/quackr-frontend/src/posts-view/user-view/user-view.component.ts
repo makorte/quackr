@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {RestService} from "../rest.service";
-import {User} from "../model/User";
-import {LoadingState} from "../model/LoadingState";
-import {Post} from "../model/Post";
+import {RestService} from "../../rest.service";
+import {User} from "../../model/User";
+import {LoadingState} from "../../model/LoadingState";
+import {Post} from "../../model/Post";
 
 @Component({
   selector: 'app-user-view',
@@ -11,13 +11,13 @@ import {Post} from "../model/Post";
   styleUrls: ['./user-view.component.sass']
 })
 export class UserViewComponent {
-  public user: User|null = null;
+  public user: User | null = null;
   state: LoadingState = LoadingState.Loading;
   restService: RestService;
   route: ActivatedRoute;
   router: Router;
 
-  constructor(router: Router, route : ActivatedRoute, restService: RestService) {
+  constructor(router: Router, route: ActivatedRoute, restService: RestService) {
     this.restService = restService;
     this.route = route;
     this.router = router;
@@ -27,9 +27,10 @@ export class UserViewComponent {
         const id = Number(params["id"]);
         if (isNaN(id)) {
           this.router.navigate(["app", "posts"]);
-        }else {
-          restService.loadUser(id)
-            .then(user =>{
+        } else {
+          let loadUser: Promise<User> = restService.loadUser(id);
+          loadUser
+            .then(user => {
               this.user = user;
               this.state = LoadingState.Loaded;
             })
@@ -44,19 +45,20 @@ export class UserViewComponent {
 
   getPostFunction(): () => Promise<Post[]> {
     return () => new Promise((resolve, reject) => {
-      let lUser: User = new User(-1,[],"","","");
+      let lUser: User = new User(-1, [], "", "", "");
       this.route.params.subscribe({
         next: params => {
           const id = Number(params["id"]);
           if (isNaN(id)) {
             reject("No User ID")
-          }else {
-            this.restService.loadUser(id)
-              .then(user =>{
+          } else {
+            let loadUser: Promise<User> = this.restService.loadUser(id);
+            loadUser
+              .then(user => {
                 lUser = user;
               })
               .catch(err => {
-                lUser = new User(-1,[],"","","");
+                lUser = new User(-1, [], "", "", "");
                 reject("Rest Service");
               })
             ;

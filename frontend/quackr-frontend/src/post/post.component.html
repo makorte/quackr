@@ -9,8 +9,11 @@
         <div class="vr vl"></div>
       </div>
       <div>
-        <img src="{{post.ersteller.userIconLink}}" class="rounded-circle p-1" width="50" height="50">
-        <span>{{post.ersteller.name}}</span>
+        <a href="app/user/{{post.ersteller.id}}" class="text-decoration-none">
+          <img src="{{post.ersteller.userIconLink}}" class="rounded-circle p-1" width="50" height="50">
+          <span class="text-body">{{post.ersteller.name}}</span>
+        </a>
+
       </div>
       <img  *ngIf="post.imageLink != null" src="/assets/katze.jpg" class="card-img-top  object-fit-contain border rounded postImage"   alt="..."/>
     </div>

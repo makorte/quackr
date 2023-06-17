@@ -1,4 +1,4 @@
-<div *ngIf="state == LoadingState.LOADING" class="d-flex justify-content-center">
+<div *ngIf="state == LoadingState.Loading" class="d-flex justify-content-center">
   <span class="pe-3">Lade Thread...</span>
   <div class="spinner-border align-content-center" role="status">
     <span class="visually-hidden text-md-center">Loading...</span>
@@ -6,7 +6,7 @@
 </div>
 
 
-<div *ngIf="state == LoadingState.LOADED">
+<div *ngIf="state == LoadingState.Loaded">
   <div *ngFor="let tPost of thread;">
     <app-post [post]="tPost"/>
   </div>

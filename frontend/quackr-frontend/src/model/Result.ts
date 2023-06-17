@@ -50,6 +50,7 @@ export class Err extends Result<ErrorCodes> {
 }
 
 export enum ErrorCodes {
-  NOT_FOUND = 1
+  NOT_FOUND = 1,
+  NaN
 }
 

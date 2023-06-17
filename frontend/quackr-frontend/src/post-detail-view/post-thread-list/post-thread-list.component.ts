@@ -13,7 +13,7 @@ export class PostThreadListComponent implements OnChanges{
 
   @Input() post: Post = new Post("",0,0,LikeStatus.NONE, new User(-1, [], "", "",""));
   private restService: RestService;
-  public state: LoadingState = LoadingState.LOADING;
+  public state: LoadingState = LoadingState.Loading;
   public kommentare: Post[] = [];
   public thread: Post[] = [];
 
@@ -41,7 +41,7 @@ export class PostThreadListComponent implements OnChanges{
           console.log(this.thread)
           resolve(null)
         })
-        .then(() => this.state = LoadingState.LOADED);
+        .then(() => this.state = LoadingState.Loaded);
       });
 
   }

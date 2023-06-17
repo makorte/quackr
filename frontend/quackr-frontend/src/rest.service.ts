@@ -41,7 +41,7 @@ export class RestService {
   }
   public loadUser(id: number): Promise<User> {
     return new Promise((resolve, reject) => {
-      if (this.users.length >= id) {
+      if (this.users.length <= id) {
         reject("User not Found");
       }else {
         resolve(this.users[id])

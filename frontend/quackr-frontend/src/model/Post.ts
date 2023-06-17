@@ -1,4 +1,5 @@
 import {User} from "./User";
+import {Comment} from "./Comment";
 
 export class Post {
   public kommentarVon: Post|null = null;
@@ -10,6 +11,7 @@ export class Post {
   public id: number|null;
   public ersteller: User;
   public erstellungsDatum: string = "10.06.2023 23:52";
+  public comments: Comment[] = [];
 
 
   constructor(message: string, likes: number, dislikes: number, likeStatus: LikeStatus,ersteller: User, id: number|null = null, kommentarVon: Post|null = null, imageLink: string | null = null) {

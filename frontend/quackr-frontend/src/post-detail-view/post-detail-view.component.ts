@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 import {Post} from "../model/Post";
 import {RestService} from "../rest.service";
+import {LoadingState} from "../model/LoadingState";
 
 @Component({
   selector: 'app-post-detail-view',
@@ -52,11 +53,7 @@ export class PostDetailViewComponent {
       fragment: frag
     })
   }
+
   protected readonly LoadingState = LoadingState;
 }
 
-enum LoadingState {
-  Loading,
-  Loaded,
-  Error
-}

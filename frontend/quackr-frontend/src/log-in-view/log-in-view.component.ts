@@ -32,5 +32,17 @@ export class LogInViewComponent {
       })
   }
 
+  getLoadingColor() {
+    switch (this.loginState) {
+      case LoadingState.Loading :
+        return 'bg-info';
+      case LoadingState.Loaded :
+        return 'bg-success';
+      case LoadingState.Error :
+        return 'bg-danger';
+    }
+    return '';
+  }
+
   protected readonly LoadingState = LoadingState;
 }

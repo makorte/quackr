@@ -1,7 +1,7 @@
-<div class="container-fluid">
+<div class="container-fluid" [@.disabled]="true">
   <header class="d-flex flex-wrap align-content-center justify-content-center py-3 mb-4 border-bottom quackr-header">
     <div class="col"></div>
-    <a href="/" class="text-decoration-none text-body text-center col">
+    <a routerLink="/" class="text-decoration-none text-body text-center col">
       <h1 class="display-2 user-select-none">🦆 quackr</h1>
     </a>
     <div class="dropdown text-end col pt-3 ">
@@ -15,7 +15,7 @@
 </div>
 <div class="container-fluid">
   <div class="row">
-    <div class="col">
+    <div class="col" [@routeAnimations]="getRouteAnimationData()">
       <router-outlet/>
     </div>
     <div class="col" *ngIf="showSidebar">

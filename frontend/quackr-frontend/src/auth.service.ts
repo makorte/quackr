@@ -1,16 +1,17 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnDestroy, OnInit} from '@angular/core';
 import {OK, Result} from "./model/Result";
 import {User} from "./model/User";
 import {RestService} from "./rest.service";
 import {resolve} from "@angular/compiler-cli";
 import {delay} from "rxjs";
 import {error} from "@angular/compiler-cli/src/transformers/util";
+import {resetParseTemplateAsSourceFileForTest} from "@angular/compiler-cli/src/ngtsc/typecheck/diagnostics";
 
 @Injectable({
   providedIn: 'platform',
 
 })
-export class AuthService {
+export class AuthService implements OnInit, OnDestroy{
   private restService: RestService;
 
   constructor(restService: RestService) {
@@ -35,8 +36,9 @@ export class AuthService {
   public login(): Promise<boolean> {
     return new Promise<boolean>((resolve) =>  {
       setTimeout(() => {
-        this.isAuth = true;
-        resolve(true);
+        this.isAuth = Math.random() > 0.5;
+        console.log(this.isAuth)
+        resolve(this.isAuth);
       }, 1000)
     })
   }
@@ -57,5 +59,13 @@ export class AuthService {
         reject("Nicht angemeldet")
       }
     })
+  }
+
+  ngOnDestroy(): void {
+    console.log("on Destroy auth")
+  }
+
+  ngOnInit(): void {
+    console.log("on Init auth")
   }
 }

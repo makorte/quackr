@@ -26,8 +26,8 @@
     </div>
   </div>
 
-  <div class="progress" *ngIf="loginState == LoadingState.Loading">
-    <div class="progress-bar progress-bar-striped progress-bar-animated w-100"></div>
+  <div class="progress" *ngIf="loginState != null">
+    <div class="progress-bar progress-bar-striped progress-bar-animated w-100 {{getLoadingColor()}}"></div>
   </div>
 
 </form>

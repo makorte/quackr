@@ -30,8 +30,10 @@
       <div class="col">
         <a routerLink="/app/posts" class="text-decoration-none text-body">⬅️</a>
       </div>
-      <button class="col-10 btn-primary btn" (click)="onRegister()">Registrieren</button>
+      <button class="col-10 btn-primary btn" [disabled]="!(registerState == null || registerState == LoadingState.Error)" (click)="onRegister()">Registrieren</button>
     </div>
   </div>
-
+  <div class="progress" *ngIf="registerState != null">
+    <div class="progress-bar progress-bar-striped progress-bar-animated w-100 {{getLoadingColor()}}"></div>
+  </div>
 </form>

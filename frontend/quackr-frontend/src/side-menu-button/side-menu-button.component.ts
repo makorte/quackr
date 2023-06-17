@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AuthService} from "../auth.service";
 import {User} from "../model/User";
+import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Component({
   selector: 'app-side-menu-button',
@@ -22,6 +23,10 @@ export class SideMenuButtonComponent implements OnInit{
     this.authService.getCurrentUser()
       .then(user => {
         this.user = user;
+      })
+      .catch(error => {
+        console.error(error)
+        setTimeout(this.ngOnInit, 1000);
       })
 
   }

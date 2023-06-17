@@ -1,11 +1,14 @@
 import {Component} from '@angular/core';
 import {AuthService} from "../auth.service";
 import {User} from "../model/User";
+import {ChildrenOutletContexts} from "@angular/router";
+import {slideInAnimation} from "../transition";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+  styleUrls: ['./app.component.sass'],
+  animations: [slideInAnimation]
 })
 export class AppComponent {
   private authService: AuthService;
@@ -14,7 +17,10 @@ export class AppComponent {
 
   private user: User | null = null;
 
-  constructor(authService: AuthService) {
+  private contexts: ChildrenOutletContexts;
+
+  constructor(authService: AuthService, contexts: ChildrenOutletContexts) {
+    this.contexts = contexts;
     this.authService = authService;
   }
 
@@ -39,5 +45,8 @@ export class AppComponent {
   protected readonly User = User;
 
 
+  getRouteAnimationData() {
+    return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];
+  }
 }
 

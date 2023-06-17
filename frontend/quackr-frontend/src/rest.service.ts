@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy, OnInit} from '@angular/core';
 import {LikeStatus, Post} from "./model/Post";
 import {OK, Result} from "./model/Result";
 import {User} from "./model/User";
@@ -9,7 +9,7 @@ import {User} from "./model/User";
 /**
  * Service für die Kommunikation mit dem Backend.
  */
-export class RestService {
+export class RestService  implements OnInit, OnDestroy{
 
 
 
@@ -101,4 +101,12 @@ export class RestService {
     return new OK(null);
   }
 
+
+  ngOnDestroy(): void {
+    console.log("on Destroy rest")
+  }
+
+  ngOnInit(): void {
+    console.log("on Init rest")
+  }
 }

@@ -18,7 +18,7 @@
     <div class="col" [@routeAnimations]="getRouteAnimationData()">
       <router-outlet/>
     </div>
-    <div class="col" *ngIf="showSidebar">
+    <div @flyInOut class="col" *ngIf="showSidebar">
       <app-side-menu (onClose)="showSideBar()"/>
     </div>
   </div>

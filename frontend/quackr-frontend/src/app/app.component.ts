@@ -3,12 +3,23 @@ import {AuthService} from "../auth.service";
 import {User} from "../model/User";
 import {ChildrenOutletContexts} from "@angular/router";
 import {slideInAnimation} from "../transition";
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass'],
-  animations: [slideInAnimation]
+  animations: [slideInAnimation, trigger('flyInOut', [
+    state('in', style({ transform: 'translateX(0)' })),
+    transition('void => *', [
+      style({ transform: 'translateX(200%)' }),
+      animate('160ms ease-in-out')
+    ]),
+    transition('* => void', [
+      animate('160ms ease-in-out', style({ transform: 'translateX(100%)' }))
+    ])
+  ])],
+
 })
 export class AppComponent {
   private authService: AuthService;

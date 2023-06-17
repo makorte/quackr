@@ -7,13 +7,18 @@
     <div class="dropdown text-end col">
       <a data-bs-toggle="offcanvas" role="button">
         <img src="/assets/katze.jpg"  (click)="showSideBar()" class="rounded-circle p-1" width="50" height="50">
+        ⤵️
       </a>
-      <button (click)="showSideBar()" class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Show</button>
-
-<!--      <p>TestName</p>-->
-
     </div>
   </header>
 </div>
-<app-side-menu [showing]="showSidebar"/>
-<router-outlet/>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <router-outlet/>
+    </div>
+    <div class="col" *ngIf="showSidebar">
+      <app-side-menu/>
+    </div>
+  </div>
+</div>

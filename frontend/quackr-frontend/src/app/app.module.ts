@@ -17,6 +17,9 @@ import {LikeButtonComponent} from "../post/like-button/like-button.component";
 import {DislikeButtonComponent} from "../post/dislike-button/dislike-button.component";
 import {AuthService} from "../auth.service";
 import {PostThreadListComponent} from "../post-detail-view/post-thread-list/post-thread-list.component";
+import {LogInViewComponent} from "../log-in-view/log-in-view.component";
+import {RegisterViewComponent} from "../register-view/register-view.component";
+import {ImageInputComponent} from "../image-input/image-input.component";
 import {SideMenuComponent} from "../side-menu/side-menu.component";
 
 @NgModule({
@@ -31,6 +34,9 @@ import {SideMenuComponent} from "../side-menu/side-menu.component";
     LikeButtonComponent,
     DislikeButtonComponent,
     PostThreadListComponent,
+    LogInViewComponent,
+    RegisterViewComponent,
+    ImageInputComponent,
     SideMenuComponent
   ],
   imports: [

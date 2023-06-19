@@ -11,3 +11,8 @@ server:
   port: 8084
   servlet:
     context-path: /quackr/rest/v1
+
+app:
+  jwt:
+    secret: hvewC3B9GOcOXdHP4dfiiAGCA58K4BlFF8o6Z3yMWJP81GuUFfsrPQJOpAGUoLqLndJ2hDpoETIGoiiH76yrQHTpkf5L2MG6JAaJElaU
+    expiration_time_minutes: 180

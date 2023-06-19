@@ -23,9 +23,4 @@ public class UserRepositoryImpl implements UserRepository {
     public User save(User user) {
         return userMapper.toDomain(userDAO.save(userMapper.toDTO(user)));
     }
-
-    @Override
-    public void delete(Long id) {
-        userDAO.remove(id);
-    }
 }

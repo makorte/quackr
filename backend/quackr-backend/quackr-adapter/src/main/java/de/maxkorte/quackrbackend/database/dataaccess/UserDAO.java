@@ -21,10 +21,6 @@ public class UserDAO {
         return userDTO;
     }
 
-    public UserDTO findById(Long id) {
-        return this.entityManager.find(UserDTO.class, id);
-    }
-
     public UserDTO findByUsername(String username) {
         final CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
         final CriteriaQuery<UserDTO> query = builder.createQuery(UserDTO.class);
@@ -36,10 +32,5 @@ public class UserDAO {
         query.select(from).where(predicate);
 
         return this.entityManager.createQuery(query).getSingleResult();
-    }
-
-    @Transactional
-    public void remove(Long id) {
-        this.entityManager.remove(this.findById(id));
     }
 }

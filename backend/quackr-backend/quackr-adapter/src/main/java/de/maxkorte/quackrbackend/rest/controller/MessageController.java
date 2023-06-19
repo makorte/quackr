@@ -34,7 +34,7 @@ public class MessageController {
 
     @DeleteMapping({"/{username}/messages/{messageId}/", "/{username}/messages/{messageId}"})
     public ResponseEntity<Message> delete(@PathVariable String username, @PathVariable Long messageId) {
-        User user = userService.getByUsername(username);
+        User user = userService.getUserByUsername(username);
         Message message = messageService.getById(messageId);
 
         if(!user.getId().equals(message.getUser().getId())) {

@@ -5,5 +5,4 @@ import de.maxkorte.quackrbackend.User;
 public interface UserRepository {
     User findByUsername(String username);
     User save(User user);
-    void delete(Long id);
 }

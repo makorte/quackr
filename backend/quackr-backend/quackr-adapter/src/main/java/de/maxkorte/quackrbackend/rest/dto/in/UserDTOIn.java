@@ -1,11 +1,11 @@
-package de.maxkorte.quackrbackend.rest.dto;
+package de.maxkorte.quackrbackend.rest.dto.in;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class UserDTO {
+public class UserDTOIn {
     private String username;
     private String password;
 }

@@ -1,6 +1,7 @@
 package de.maxkorte.quackrbackend.rest.controller;
 
-import de.maxkorte.quackrbackend.rest.dto.UserDTO;
+import de.maxkorte.quackrbackend.User;
+import de.maxkorte.quackrbackend.rest.dto.in.UserDTOIn;
 import de.maxkorte.quackrbackend.rest.mapper.UserMapperRest;
 import de.maxkorte.quackrbackend.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -13,18 +14,14 @@ public class UserController {
     private final UserService userService;
     private final UserMapperRest userMapper;
 
-    @GetMapping({"/{username}", "/{username}/"})
-    public ResponseEntity<UserDTO> getByUsername(@PathVariable String username) {
-        return ResponseEntity.ok(userMapper.toDTO((userService.getUserByUsername(username))));
-    }
-
     @PostMapping("/auth/register")
-    public ResponseEntity<UserDTO> register(@RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(userMapper.toDTO(userService.registerUser(userMapper.toDomain(userDTO))));
+    public ResponseEntity<String> register(@RequestBody UserDTOIn userDTOIn) {
+        User savedUser = userService.registerUser(userMapper.toDomain(userDTOIn));
+        return ResponseEntity.ok(savedUser.getUsername());
     }
 
     @PostMapping("/auth/authenticate")
-    public ResponseEntity<String> authenticate(@RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(userService.authenticate(userDTO.getUsername(), userDTO.getPassword()));
+    public ResponseEntity<String> authenticate(@RequestBody UserDTOIn userDTOIn) {
+        return ResponseEntity.ok(userService.authenticate(userDTOIn.getUsername(), userDTOIn.getPassword()));
     }
 }

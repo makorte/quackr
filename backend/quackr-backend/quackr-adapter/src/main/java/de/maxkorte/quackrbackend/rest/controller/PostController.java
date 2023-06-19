@@ -2,11 +2,15 @@ package de.maxkorte.quackrbackend.rest.controller;
 
 import de.maxkorte.quackrbackend.Post;
 import de.maxkorte.quackrbackend.User;
-import de.maxkorte.quackrbackend.rest.dto.PostDTO;
+import de.maxkorte.quackrbackend.rest.dto.in.PostDTOIn;
+import de.maxkorte.quackrbackend.rest.dto.out.PostDTOOut;
+import de.maxkorte.quackrbackend.rest.mapper.PostMapperRest;
 import de.maxkorte.quackrbackend.service.PostService;
 import de.maxkorte.quackrbackend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,28 +20,30 @@ import java.util.List;
 public class PostController {
     private final PostService postService;
     private final UserService userService;
+    private final PostMapperRest postMapper;
 
     @GetMapping({"/posts/all", "/posts/all/"})
-    public ResponseEntity<List<Post>> getAll() {
-        return ResponseEntity.ok(this.postService.getAll());
+    public ResponseEntity<List<PostDTOOut>> getAll() {
+        return ResponseEntity.ok(postMapper.toDTOList(postService.getAll()));
     }
 
     @GetMapping({"/{username}/posts", "/{username}/posts/"})
-    public ResponseEntity<List<Post>> getByUsername(@PathVariable String username) {
-        return ResponseEntity.ok(postService.getByUsername(username));
+    public ResponseEntity<List<PostDTOOut>> getByUsername(@PathVariable String username) {
+        return ResponseEntity.ok(postMapper.toDTOList(postService.getByUsername(username)));
     }
 
-    @PostMapping({"/{username}/posts", "/{username}/posts/"})
-    public ResponseEntity<Post> createPostByUsername(@PathVariable String username, @RequestBody PostDTO post) {
-        return ResponseEntity.ok(postService.createByUsername(username, post.getTitle(), post.getBody()));
+    @PostMapping({"/posts", "/posts/"})
+    public ResponseEntity<PostDTOOut> createPostByUsername(@RequestBody PostDTOIn post, Authentication authentication) {
+        return ResponseEntity.ok(postMapper.toDTO(postService.createByUsername(authentication.getName(), post.getTitle(), post.getBody())));
     }
 
+    @PreAuthorize("#username.equals(authentication.name)")
     @DeleteMapping({"/{username}/posts/{postId}/", "/{username}/posts/{postId}"})
     public ResponseEntity<Post> delete(@PathVariable String username, @PathVariable Long postId) {
         User user = userService.getUserByUsername(username);
         Post post = postService.getById(postId);
 
-        if(!user.getId().equals(post.getUser().getId())) {
+        if (!user.getId().equals(post.getUser().getId())) {
             return ResponseEntity.badRequest().body(null);
         }
 

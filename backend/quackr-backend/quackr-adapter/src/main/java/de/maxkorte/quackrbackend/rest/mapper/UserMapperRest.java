@@ -1,16 +1,12 @@
 package de.maxkorte.quackrbackend.rest.mapper;
 
 import de.maxkorte.quackrbackend.User;
-import de.maxkorte.quackrbackend.rest.dto.UserDTO;
+import de.maxkorte.quackrbackend.rest.dto.in.UserDTOIn;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapperRest {
-    public UserDTO toDTO(User user) {
-        return new UserDTO(user.getUsername(), null);
-    }
-
-    public User toDomain(UserDTO userDTO) {
-        return new User(null, userDTO.getUsername(), userDTO.getPassword());
+    public User toDomain(UserDTOIn userDTOIn) {
+        return new User(null, userDTOIn.getUsername(), userDTOIn.getPassword());
     }
 }

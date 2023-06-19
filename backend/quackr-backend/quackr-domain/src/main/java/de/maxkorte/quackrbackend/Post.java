@@ -10,5 +10,6 @@ public class Post {
     private String title;
     private String body;
     private User user;
+    private String imageUrl;
 }
 

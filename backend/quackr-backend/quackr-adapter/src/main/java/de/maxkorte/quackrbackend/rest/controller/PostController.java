@@ -34,7 +34,7 @@ public class PostController {
 
     @PostMapping({"/posts", "/posts/"})
     public ResponseEntity<PostDTOOut> createPostByUsername(@RequestBody PostDTOIn post, Authentication authentication) {
-        return ResponseEntity.ok(postMapper.toDTO(postService.createByUsername(authentication.getName(), post.getTitle(), post.getBody())));
+        return ResponseEntity.ok(postMapper.toDTO(postService.createByUsername(authentication.getName(), post.getTitle(), post.getBody(), post.getImageUrl())));
     }
 
     @PreAuthorize("#username.equals(authentication.name)")

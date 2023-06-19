@@ -10,4 +10,5 @@ public class PostDTOOut {
     private String title;
     private String body;
     private String username;
+    private String imageUrl;
 }

@@ -19,4 +19,5 @@ public class UserDTO {
     @Column(unique = true)
     private String username;
     private String password;
+    private String imageUrl;
 }

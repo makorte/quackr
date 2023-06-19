@@ -8,4 +8,5 @@ import lombok.Data;
 public class UserDTOIn {
     private String username;
     private String password;
+    private String imageUrl;
 }

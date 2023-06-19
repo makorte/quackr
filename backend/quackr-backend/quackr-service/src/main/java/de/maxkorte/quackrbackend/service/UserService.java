@@ -31,6 +31,7 @@ public class UserService {
                 .id(user.getId())
                 .username(user.getUsername())
                 .password(passwordEncoder.encode(user.getPassword()))
+                        .imageUrl(user.getImageUrl())
                 .build());
     }
 

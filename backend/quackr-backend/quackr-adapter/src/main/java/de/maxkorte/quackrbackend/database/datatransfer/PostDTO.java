@@ -20,4 +20,5 @@ public class PostDTO {
     private String body;
     @ManyToOne
     private UserDTO user;
+    private String imageUrl;
 }

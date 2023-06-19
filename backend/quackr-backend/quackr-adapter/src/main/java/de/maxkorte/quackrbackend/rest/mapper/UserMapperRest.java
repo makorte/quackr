@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapperRest {
-    public User toDomain(UserDTOIn userDTOIn) {
-        return new User(null, userDTOIn.getUsername(), userDTOIn.getPassword());
+    public User toDomain(UserDTOIn userDTO) {
+        return new User(null, userDTO.getUsername(), userDTO.getPassword(), userDTO.getImageUrl());
     }
 }

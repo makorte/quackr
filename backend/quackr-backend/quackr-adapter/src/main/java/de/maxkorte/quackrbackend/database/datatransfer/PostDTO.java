@@ -11,8 +11,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "quackr_message")
-public class MessageDTO {
+@Table(name = "quackr_post")
+public class PostDTO {
     @Id
     @GeneratedValue
     private Long id;

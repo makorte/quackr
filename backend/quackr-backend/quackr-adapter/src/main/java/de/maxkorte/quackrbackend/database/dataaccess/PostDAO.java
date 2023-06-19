@@ -1,6 +1,6 @@
 package de.maxkorte.quackrbackend.database.dataaccess;
 
-import de.maxkorte.quackrbackend.database.datatransfer.MessageDTO;
+import de.maxkorte.quackrbackend.database.datatransfer.PostDTO;
 import de.maxkorte.quackrbackend.database.datatransfer.UserDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -15,31 +15,31 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class MessageDAO {
+public class PostDAO {
     private final EntityManager entityManager;
 
     @Transactional
-    public MessageDTO save(MessageDTO messageDTO) {
-        this.entityManager.persist(messageDTO);
-        return messageDTO;
+    public PostDTO save(PostDTO postDTO) {
+        this.entityManager.persist(postDTO);
+        return postDTO;
     }
 
-    public List<MessageDTO> findAll() {
+    public List<PostDTO> findAll() {
         final CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
-        final CriteriaQuery<MessageDTO> query = builder.createQuery(MessageDTO.class);
+        final CriteriaQuery<PostDTO> query = builder.createQuery(PostDTO.class);
 
-        final Root<MessageDTO> from = query.from(MessageDTO.class);
+        final Root<PostDTO> from = query.from(PostDTO.class);
 
         query.select(from);
 
         return this.entityManager.createQuery(query).getResultList();
     }
 
-    public List<MessageDTO> findByUser(UserDTO userDTO) {
+    public List<PostDTO> findByUser(UserDTO userDTO) {
         final CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
-        final CriteriaQuery<MessageDTO> query = builder.createQuery(MessageDTO.class);
+        final CriteriaQuery<PostDTO> query = builder.createQuery(PostDTO.class);
 
-        final Root<MessageDTO> from = query.from(MessageDTO.class);
+        final Root<PostDTO> from = query.from(PostDTO.class);
 
         final Predicate predicate = builder.equal(from.get("user"), userDTO);
 
@@ -48,8 +48,8 @@ public class MessageDAO {
         return this.entityManager.createQuery(query).getResultList();
     }
 
-    public MessageDTO findById(Long id) {
-        return this.entityManager.find(MessageDTO.class, id);
+    public PostDTO findById(Long id) {
+        return this.entityManager.find(PostDTO.class, id);
     }
 
     @Transactional

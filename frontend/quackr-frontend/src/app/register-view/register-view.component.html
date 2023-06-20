@@ -1,0 +1,42 @@
+<form class="p-5">
+  <div class="form-floating mb-5">
+    <input type="text" id="usernameInput" class="form-control" placeholder="">
+    <label for="usernameInput">Benutzername</label>
+  </div>
+
+  <div class="form-floating mb-5">
+    <input type="email" id="emailInput" class="form-control" placeholder="">
+    <label for="emailInput">Email</label>
+  </div>
+
+  <div class="form-floating  mb-5">
+    <input type="password" id="passwortInput" class="form-control" placeholder="">
+    <label for="passwortInput">Passwort</label>
+  </div>
+
+  <div class="form-floating  mb-5">
+    <app-image-input/>
+  </div>
+
+
+  <div class="container align-content-center text-center">
+    <div class="row">
+      <hr class="col w-25">
+      <a [routerLink]="'/app/login'" class="col text-decoration-none text-center text-body">Melde dich an</a>
+      <hr class="col w-25">
+    </div>
+
+    <div class="row p-5">
+      <div class="col">
+        <a routerLink="/app/posts" class="text-decoration-none text-body">⬅️</a>
+      </div>
+      <button class="col-10 btn-primary btn"
+              [disabled]="isRegisterError()" (click)="onRegister()">
+        Registrieren
+      </button>
+    </div>
+  </div>
+  <div class="progress" *ngIf="isLoading()">
+    <div class="progress-bar progress-bar-striped progress-bar-animated w-100 {{getLoadingColor()}}"></div>
+  </div>
+</form>

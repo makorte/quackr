@@ -1,10 +1,8 @@
 import {Component} from "@angular/core";
-import {slideInAnimation} from "../transition";
+import {slideInAnimation} from "./transition";
 import {animate, state, style, transition, trigger} from "@angular/animations";
-import {AuthService} from "../auth.service";
+import {AuthService} from "./shared/service/auth.service";
 import {ChildrenOutletContexts} from "@angular/router";
-import {User} from "../model/User";
-import {openCreatePostForm} from "../openCreatePostForm";
 
 @Component({
   selector: 'app-root',
@@ -23,46 +21,23 @@ import {openCreatePostForm} from "../openCreatePostForm";
 
 })
 export class AppComponent {
-  private authService: AuthService;
 
   public showSidebar = false;
 
-  private user: User | null = null;
 
+  constructor(private authService: AuthService, private contexts: ChildrenOutletContexts) {
 
-  private contexts: ChildrenOutletContexts;
-
-  constructor(authService: AuthService, contexts: ChildrenOutletContexts) {
-    this.contexts = contexts;
-    this.authService = authService;
   }
 
-  showSideBar() {
+  showSideBar(): void {
     this.showSidebar = !this.showSidebar;
   }
 
-  isAuth() {
-    let authenticated = this.authService.isAuthenticated();
-
-    return authenticated;
+  isAuth(): boolean {
+    return this.authService.isAuthenticated();
   }
 
-  hasUser() {
-    return this.user != null;
-  }
-
-  getUser() {
-    return this.user;
-  }
-
-  protected readonly Promise = Promise;
-  protected readonly User = User;
-
-
-  getRouteAnimationData() {
+  getRouteAnimationData(): any {
     return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];
   }
-
-
-  protected readonly openCreatePostForm = openCreatePostForm;
 }

@@ -6,9 +6,6 @@
 <div id="post-div" class="col card back {{enableLinks ? '' : 'background-selected'}}">
 
   <div class="vstack gap-1">
-    <div *ngIf="post.kommentarVon != null" class="z-1 ps-4">
-      <div class="vr vl"></div>
-    </div>
     <div>
       <a routerLink="/app/user/{{post.ersteller.id}}" class="text-decoration-none">
         <img src="{{post.ersteller.userIconLink}}" class="rounded-circle p-1" width="50" height="50">
@@ -30,17 +27,10 @@
     <div class="container-fluid">
       <div class="row align-items-start text-start">
         <div class="col">
-          <div class="btn-toolbar gap-1 " role="toolbar">
-            <app-like-button (btnClick)="likeChange()" [post]="post"></app-like-button>
-            <app-dislike-button (btnClick)="dislikeChange()" [post]="post"></app-dislike-button>
-          </div>
-          <span class="text-body-secondary p-2">{{post.erstellungsDatum}}</span>
+          <span class="text-body-secondary p-2">{{post.createdAt}}</span>
           <button *ngIf="enableLinks" class="btn btn-outline-light float-end" (click)="toPostDetail()">-></button>
         </div>
       <div class="col"></div>
-      <div class="col align-content-end align-items-end text-end">
-        <button class="btn btn-outline-light fs-2" (click)="openKommentarDialog()">💬</button>
-      </div>
       </div>
     </div>
 

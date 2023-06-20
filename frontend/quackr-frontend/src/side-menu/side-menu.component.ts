@@ -14,7 +14,7 @@ export class SideMenuComponent implements OnInit{
 
   private router: Router;
   private authService: AuthService;
-  user: User = new User(-1, [], "","/assets/placeholder.png", "");
+  user: User = new User(-1, "","/assets/placeholder.png");
   constructor(router: Router, authService: AuthService) {
     this.router = router;
     this.authService = authService;

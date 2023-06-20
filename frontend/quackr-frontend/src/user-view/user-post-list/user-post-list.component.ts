@@ -14,7 +14,6 @@ export class UserPostListComponent implements OnInit{
 
   public posts: Post[] = [];
   @Output() reloadFunction = new EventEmitter<() => void>();
-  @Output() onOpenKommentarDialog = new EventEmitter<Post>();
 
   route: ActivatedRoute;
   router: Router;
@@ -43,7 +42,7 @@ export class UserPostListComponent implements OnInit{
   loadPosts() {
      this.getUserID(
        (userID) =>
-       this.loadUser(userID).then(user => this.posts = user.posts)
+       this.loadUser(userID).then(user => this.restService.loadPostsFromUser(user).then(posts => this.posts = posts))
       );
   }
 
@@ -54,9 +53,7 @@ export class UserPostListComponent implements OnInit{
     return this.posts.length == 0;
   }
 
-  postLikeChange(post: Post) {
-    this.restService.postLikeChange(post);
-  }
+
 
   protected readonly onabort = onabort;
 
@@ -64,7 +61,4 @@ export class UserPostListComponent implements OnInit{
     this.reloadFunction.emit(this.loadPosts);
   }
 
-  openKommentarDialog(post: Post) {
-    this.onOpenKommentarDialog.emit(post);
-  }
 }

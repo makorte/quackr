@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {RestService} from "../rest.service";
-import {LikeStatus, Post} from "../model/Post";
+import { Post} from "../model/Post";
 import {AuthService} from "../auth.service";
 
 @Component({
@@ -14,10 +14,8 @@ export class CreatePostPopupComponent {
   private restService: RestService;
   private authService: AuthService;
 
-  @Input() kommentarVon: Post | null = null;
   @Input() reloadFunction: () => void  = () => {console.log("Default post popup")};
   url: string | null = null;
-  icon: File | null = null;
 
   constructor(restService: RestService, authService: AuthService) {
     this.restService = restService;
@@ -34,12 +32,10 @@ export class CreatePostPopupComponent {
   }
 
   createPost() {
-    console.log("url:" + this.url)
-    console.log("file:" + this.icon)
     // this.closeDialog();
     this.authService.getCurrentUser()
       .then(user => {
-        this.restService.createPost(new Post(this.text, 0, 0, LikeStatus.NONE, user, null, this.kommentarVon, this.url)).then((post) => {
+        this.restService.createPost(new Post(this.text,  user, new Date().toLocaleTimeString(),null,  this.url)).then((post) => {
           console.log("reload:"+this.reloadFunction)
           this.reloadFunction();
           this.closeDialog()
@@ -61,8 +57,5 @@ export class CreatePostPopupComponent {
     this.isError = false;
   }
 
-  isKommentar() {
-    return this.kommentarVon != null;
-  }
 
 }

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {LikeStatus, Post} from "../model/Post";
+import {Post} from "../model/Post";
 import {User} from "../model/User";
 import {Router} from "@angular/router";
 
@@ -15,24 +15,13 @@ export class PostComponent {
     this.router = router;
   }
 
-  @Input() post: Post = new Post("Lädt...", 0, 0, LikeStatus.NONE, new User(-1, [], "", "", ""));
+  @Input() post: Post = new Post("Lädt...",  new User(-1, "", ""));
   @Input() enableLinks: boolean = true;
 
-  @Output() onLikeStatusChange = new EventEmitter<Post>();
 
-  @Output() onOpenKommentarDialog = new EventEmitter<Post>();
-
-  likeChange() {
-    console.log("like change post comp")
-    this.post.likeChange();
-    this.onLikeStatusChange.emit(this.post);
-  }
-
-  dislikeChange() {
-    this.post.dislikeChange();
-    this.onLikeStatusChange.emit(this.post);
-  }
-
+  /**
+   * Navigiert zur Post-Detail-Seite
+   */
   toPostDetail() {
     let frag = this.post == null ? '' : this.post.id == null ? '' : this.post.id.toString();
 
@@ -41,8 +30,4 @@ export class PostComponent {
     });
   }
 
-  openKommentarDialog() {
-    console.log("open CreateKommentar")
-    this.onOpenKommentarDialog.emit(this.post);
-  }
 }

@@ -13,7 +13,7 @@ export class SideMenuButtonComponent implements OnInit{
   @Output() showSideBar = new EventEmitter<null>();
   private authService: AuthService;
 
-   user: User = new User(-1, [], "","/assets/placeholder.png", "");
+   user: User = new User(-1, "","/assets/placeholder.png");
 
   constructor(authService: AuthService) {
     this.authService = authService;

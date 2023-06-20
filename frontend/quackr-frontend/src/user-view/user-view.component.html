@@ -21,8 +21,8 @@
     </div>
   </div>
 
-  <app-user-post-list (onOpenKommentarDialog)="openKommentarDialog($event)"></app-user-post-list>
-  <app-create-post-popup [kommentarVon]="post" [reloadFunction]="reloadFunction"></app-create-post-popup>
+  <app-user-post-list></app-user-post-list>
+  <app-create-post-popup  [reloadFunction]="reloadFunction"></app-create-post-popup>
 
   <app-create-post-button *ngIf="isAuth()" (createPost)="openCreatePostDialog()"/>
 

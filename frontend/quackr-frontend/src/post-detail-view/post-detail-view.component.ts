@@ -13,15 +13,11 @@ import {AuthService} from "../auth.service";
 })
 export class PostDetailViewComponent {
   public post: Post|null = null;
-  kommentarVon: Post|null = null;
-
   state: LoadingState = LoadingState.Loading;
 
   reloadFunction: () => void = () => { console.log("Default detail view")};
-  private authService: AuthService;
 
-  constructor(private router: Router, private route : ActivatedRoute, restService: RestService, authService: AuthService) {
-    this.authService = authService;
+  constructor(private router: Router, private route : ActivatedRoute, private restService: RestService, private authService: AuthService) {
 
     this.route.params.subscribe({
       next: params => {
@@ -61,13 +57,6 @@ export class PostDetailViewComponent {
     })
   }
 
-  openKommentarDialog(post: Post) {
-    this.kommentarVon = post;
-    let dialog: HTMLElement | null = document.getElementById("create-post-dialog");
-    if (dialog) {
-      (<HTMLDialogElement>dialog).showModal();
-    }
-  }
   setReload(reloadFunction: () => void) {
     this.reloadFunction = reloadFunction;
   }
@@ -79,7 +68,6 @@ export class PostDetailViewComponent {
   }
 
   openCreatePostDialog() {
-    this.kommentarVon = null;
     openCreatePostForm();
   }
 }

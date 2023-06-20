@@ -50,7 +50,7 @@ export class UserViewComponent {
 
   getPostFunction(): () => Promise<Post[]> {
     return () => new Promise((resolve, reject) => {
-      let lUser: User = new User(-1, [], "", "", "");
+      let lUser: User = new User(-1,  "", "");
       this.route.params.subscribe({
         next: params => {
           const id = Number(params["id"]);
@@ -63,7 +63,7 @@ export class UserViewComponent {
                 lUser = user;
               })
               .catch(err => {
-                lUser = new User(-1, [], "", "", "");
+                lUser = new User(-1,  "",  "");
                 reject("Rest Service");
               })
             ;
@@ -73,13 +73,12 @@ export class UserViewComponent {
       while (lUser.id == -1) {
       }
 
-      console.log("resolved User posts")
-      resolve(lUser.posts)
     })
   }
 
   protected readonly LoadingState = LoadingState;
   protected readonly openCreatePostForm = openCreatePostForm;
+
   reloadFunction: () => void = () => console.log("Default User View");
   setReload(reloadFunction: () => void) {
     this.reloadFunction = () => {
@@ -91,10 +90,6 @@ export class UserViewComponent {
     return this.authService.isAuthenticated();
   }
 
-  openKommentarDialog(post: Post) {
-    this.post = post;
-    openCreatePostForm();
-  }
 
   openCreatePostDialog() {
     this.post = null;

@@ -1,5 +1,5 @@
 import {Injectable, OnDestroy, OnInit} from '@angular/core';
-import {LikeStatus, Post} from "./model/Post";
+import {Post} from "./model/Post";
 import {OK, Result} from "./model/Result";
 import {User} from "./model/User";
 
@@ -15,29 +15,26 @@ export class RestService  implements OnInit, OnDestroy{
 
 
   private users = [
-    new User(0,[],"TestNutzer", "/assets/Gucci_Spider_2.jpg", ""),
-    new User(1,[],"TestNutzer2", "/assets/katze.jpg", "")
+    new User(0,"TestNutzer", "/assets/Gucci_Spider_2.jpg"),
+    new User(1,"TestNutzer2", "/assets/katze.jpg")
   ];
 
   private posts = [
-    new Post("Post 1 \n Das ist ein sehr wichtiger Post", 1, 2, LikeStatus.NONE,this.users[0], 1, null,  "/assets/katze.jpg"),
-    new Post("Post 2 \n Das ist ein sehr wichtiger Post", 0, 0, LikeStatus.NONE,this.users[1], 2),
-    new Post("Post 3 \n Das ist ein sehr wichtiger Post", 0, 9, LikeStatus.NONE,this.users[0], 3),
-    new Post("Post 12 \n Das ist ein sehr wichtiger Post", 1, 2, LikeStatus.NONE,this.users[0], 4),
-    new Post("Post 22 \n Das ist ein sehr wichtiger Post", 0, 0, LikeStatus.NONE,this.users[0], 5),
-    new Post("Post 32 \n Das ist ein sehr wichtiger Post", 0, 9, LikeStatus.NONE,this.users[0], 6),
-    new Post("Post 13 \n Das ist ein sehr wichtiger Post", 1, 2, LikeStatus.LIKED,this.users[0], 7),
-    new Post("Post 23 \n Das ist ein sehr wichtiger Post", 0, 0, LikeStatus.NONE,this.users[0], 8),
-    new Post("Post 33 \n Das ist ein sehr wichtiger Post", 0, 9, LikeStatus.DISLIKED,this.users[0], 9),
-    new Post("Post 14 \n Das ist ein sehr wichtiger Post", 1, 2, LikeStatus.NONE,this.users[0], 10),
-    new Post("Post 24 \n Das ist ein sehr wichtiger Post", 0, 0, LikeStatus.NONE,this.users[0], 11),
-    new Post("Post 34 \n Das ist ein sehr wichtiger Post", 0, 9, LikeStatus.NONE,this.users[0], 12),
-    new Post("Post 44 \n Das ist ein sehr wichtiger Post", 6468, 647968, LikeStatus.NONE,this.users[0], 13)];
+    new Post("Post 1 \n Das ist ein sehr wichtiger Post", this.users[0], "10.06.2023 23:06", 1,  "/assets/katze.jpg"),
+    new Post("Post 2 \n Das ist ein sehr wichtiger Post", this.users[1],"10.06.2023 23:06", 2),
+    new Post("Post 3 \n Das ist ein sehr wichtiger Post", this.users[0],"10.06.2023 23:06", 3),
+    new Post("Post 12 \n Das ist ein sehr wichtiger Post",this.users[0],"10.06.2023 23:06", 4),
+    new Post("Post 22 \n Das ist ein sehr wichtiger Post",this.users[0],"10.06.2023 23:06", 5),
+    new Post("Post 32 \n Das ist ein sehr wichtiger Post",this.users[0],"10.06.2023 23:06", 6),
+    new Post("Post 13 \n Das ist ein sehr wichtiger Post",this.users[0],"10.06.2023 23:06", 7),
+    new Post("Post 23 \n Das ist ein sehr wichtiger Post",this.users[0],"10.06.2023 23:06", 8),
+    new Post("Post 33 \n Das ist ein sehr wichtiger Post",this.users[0],"10.06.2023 23:06", 9),
+    new Post("Post 14 \n Das ist ein sehr wichtiger Post",this.users[0],"10.06.2023 23:06", 10),
+    new Post("Post 24 \n Das ist ein sehr wichtiger Post",this.users[0], "10.06.2023 23:06",11),
+    new Post("Post 34 \n Das ist ein sehr wichtiger Post",this.users[0],"10.06.2023 23:06", 12),
+    new Post("Post 44 \n Das ist ein sehr wichtiger Post",this.users[0], "10.06.2023 23:06",13)];
 
   constructor() {
-    this.posts[3].kommentarVon = this.posts[2];
-    this.posts[4].kommentarVon = this.posts[2];
-    this.posts[7].kommentarVon = this.posts[3];
   }
   public loadUser(id: number): Promise<User> {
     return new Promise((resolve, reject) => {
@@ -52,7 +49,7 @@ export class RestService  implements OnInit, OnDestroy{
    * Fragt die Posts vom Server an und gibt diese zurück. Vielleicht gibt er später ein Subject zurück.
    */
   public loadPosts(): Promise<Post[]> {
-    return new Promise((resolve) => resolve(this.posts.filter(value => value.kommentarVon == null)));
+    return new Promise((resolve) => resolve(this.posts));
   }
 
 
@@ -67,15 +64,6 @@ export class RestService  implements OnInit, OnDestroy{
     });
   }
 
-  public loadKommentare(id: number): Promise<Post[]> {
-    return new Promise((resolve) => {
-      let kommentare: Post[] = [];
-      this.posts.forEach(value => {
-        if (value.kommentarVon != null && value.kommentarVon.id == id) kommentare.push(value);
-      })
-      resolve(kommentare);
-    });
-  }
 
   public createPost(post: Post): Promise<Post> {
     return new Promise<Post>((resolve, reject) => {
@@ -95,10 +83,8 @@ export class RestService  implements OnInit, OnDestroy{
     });
   }
 
-
-  public postLikeChange(post: Post): Result<any> {
-    console.log("Liked?" + post.likeStatus + " : " + post.likes + ", " + post.dislikes);
-    return new OK(null);
+  public loadPostsFromUser(user: User): Promise<Post[]> {
+    return new Promise((resolve) => resolve(this.posts.filter(post => post.ersteller == user)));
   }
 
 

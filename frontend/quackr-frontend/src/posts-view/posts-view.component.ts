@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {LikeStatus, Post} from "../model/Post";
+import {Post} from "../model/Post";
 import {openCreatePostForm} from "../openCreatePostForm";
 import {AuthService} from "../auth.service";
 
@@ -10,25 +10,11 @@ import {AuthService} from "../auth.service";
   styleUrls: ['./posts-view.component.sass']
 })
 export class PostsViewComponent {
-  private router: Router;
-  private activeRoute: ActivatedRoute;
-  post: Post|null =null;
    reloadFunction: () => void = () => console.log("Default Posts View");
-  private authService: AuthService;
 
-  constructor(router: Router, activeRoute: ActivatedRoute, authService: AuthService) {
-    this.router = router;
-    this.activeRoute = activeRoute;
-    this.authService = authService;
+  constructor(private router: Router, private activeRoute: ActivatedRoute,private authService: AuthService) {
   }
 
- openKommentarDialog(post: Post) {
-    this.post = post;
-   let dialog: HTMLElement | null = document.getElementById("create-post-dialog");
-   if (dialog) {
-     (<HTMLDialogElement>dialog).showModal();
-   }
- }
 
   setReload(reloadFunction: () => void) {
     this.reloadFunction = reloadFunction;
@@ -41,7 +27,6 @@ export class PostsViewComponent {
   }
 
   openCreatePostDialog() {
-    this.post = null;
     openCreatePostForm();
   }
 }

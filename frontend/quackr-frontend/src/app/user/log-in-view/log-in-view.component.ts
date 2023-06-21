@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Router} from "@angular/router";
-import {AuthService} from "../shared/service/auth.service";
-import {LoadingState} from "../shared/model/LoadingState";
+import {AuthService} from "../../shared/service/auth.service";
+import {LoadingState} from "../../shared/model/LoadingState";
 
 @Component({
   selector: 'app-log-in-view',

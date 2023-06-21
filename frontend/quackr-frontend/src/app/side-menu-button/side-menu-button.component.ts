@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AuthService} from "../shared/service/auth.service";
-import {UserModel} from "../shared/model/user.model";
+import {User} from "../shared/model/user";
 
 @Component({
   selector: 'app-side-menu-button',
@@ -11,7 +11,7 @@ export class SideMenuButtonComponent implements OnInit {
 
   @Output() private showSideBar = new EventEmitter<null>();
 
-  private user: UserModel = new UserModel("", "/assets/placeholder.png");
+  private user: User = new User("", "/assets/placeholder.png");
 
   constructor(private authService: AuthService) {
   }
@@ -27,7 +27,7 @@ export class SideMenuButtonComponent implements OnInit {
 
   }
 
-  getUser(): UserModel {
+  getUser(): User {
     return this.user;
   }
 

@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {PostModel} from "../../model/post.model";
-import {UserModel} from "../../model/user.model";
+import {User} from "../../model/user";
 import {Router} from "@angular/router";
 
 @Component({
@@ -15,7 +15,7 @@ export class PostComponent {
     this.router = router;
   }
 
-  @Input() post: PostModel = new PostModel("Lädt...", new UserModel("", ""));
+  @Input() post: PostModel = new PostModel("Lädt...", new User("", ""));
   @Input() enableLinks: boolean = true;
 
 

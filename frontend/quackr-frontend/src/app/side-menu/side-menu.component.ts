@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../shared/service/auth.service";
-import {UserModel} from "../shared/model/user.model";
+import {User} from "../shared/model/user";
 
 @Component({
   selector: 'app-side-menu',
@@ -13,7 +13,7 @@ export class SideMenuComponent implements OnInit {
 
   private router: Router;
   private authService: AuthService;
-  user: UserModel = new UserModel("", "/assets/placeholder.png");
+  user: User = new User("", "/assets/placeholder.png");
 
   constructor(router: Router, authService: AuthService) {
     this.router = router;

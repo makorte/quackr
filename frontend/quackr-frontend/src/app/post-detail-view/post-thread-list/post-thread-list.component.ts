@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {PostModel} from "../../shared/model/post.model";
-import {UserModel} from "../../shared/model/user.model";
+import {User} from "../../shared/model/user";
 import {RestService} from "../../shared/service/rest.service";
 import {LoadingState} from "../../shared/model/LoadingState";
 
@@ -11,7 +11,7 @@ import {LoadingState} from "../../shared/model/LoadingState";
 })
 export class PostThreadListComponent implements OnInit, OnChanges {
 
-  @Input() post: PostModel = new PostModel("", new UserModel("", ""));
+  @Input() post: PostModel = new PostModel("", new User("", ""));
   @Output() reloadFunction = new EventEmitter<() => void>();
 
   private state: LoadingState = LoadingState.Loading;

@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Router} from "@angular/router";
-import {AuthService} from "../shared/service/auth.service";
-import {LoadingState} from "../shared/model/LoadingState";
+import {AuthService} from "../../shared/service/auth.service";
+import {LoadingState} from "../../shared/model/LoadingState";
 
 @Component({
   selector: 'app-register-view',
@@ -12,7 +12,7 @@ export class RegisterViewComponent {
   private registerState: LoadingState | null = null;
 
 
-  constructor(private router: Router,private authService: AuthService) {
+  constructor(private router: Router, private authService: AuthService) {
 
   }
 

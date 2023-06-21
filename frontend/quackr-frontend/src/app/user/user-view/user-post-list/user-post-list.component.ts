@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {RestService} from "../../shared/service/rest.service";
-import {PostModel} from "../../shared/model/post.model";
-import {UserModel} from "../../shared/model/user.model";
+import {RestService} from "../../../shared/service/rest.service";
+import {PostModel} from "../../../shared/model/post.model";
+import {User} from "../../../shared/model/user";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
@@ -27,7 +27,7 @@ export class UserPostListComponent implements OnInit {
     });
   }
 
-  loadUser(username: string): Promise<UserModel> {
+  loadUser(username: string): Promise<User> {
     return this.restService.loadUser(username);
   }
 

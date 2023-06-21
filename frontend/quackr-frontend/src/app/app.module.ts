@@ -13,11 +13,11 @@ import {PostDetailViewComponent} from "./post-detail-view/post-detail-view.compo
 import {NgOptimizedImage} from "@angular/common";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AuthService} from "./shared/service/auth.service";
-import {UserViewComponent} from "./user-view/user-view.component";
-import {UserPostListComponent} from "./user-view/user-post-list/user-post-list.component";
+import {UserViewComponent} from "./user/user-view/user-view.component";
+import {UserPostListComponent} from "./user/user-view/user-post-list/user-post-list.component";
 import {PostThreadListComponent} from "./post-detail-view/post-thread-list/post-thread-list.component";
-import {LogInViewComponent} from "./log-in-view/log-in-view.component";
-import {RegisterViewComponent} from "./register-view/register-view.component";
+import {LogInViewComponent} from "./user/log-in-view/log-in-view.component";
+import {RegisterViewComponent} from "./user/register-view/register-view.component";
 import {ImageInputComponent} from "./shared/components/image-input/image-input.component";
 import {SideMenuComponent} from "./side-menu/side-menu.component";
 import {SideMenuButtonComponent} from "./side-menu-button/side-menu-button.component";

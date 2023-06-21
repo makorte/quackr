@@ -1,6 +1,6 @@
 import {Injectable, OnDestroy, OnInit} from '@angular/core';
 import {PostModel} from "../model/post.model";
-import {UserModel} from "../model/user.model";
+import {User} from "../model/user";
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +12,8 @@ export class RestService implements OnInit, OnDestroy {
 
 
   private users = [
-    new UserModel("TestNutzer", "/assets/Gucci_Spider_2.jpg"),
-    new UserModel("TestNutzer2", "/assets/katze.jpg")
+    new User("TestNutzer", "/assets/Gucci_Spider_2.jpg"),
+    new User("TestNutzer2", "/assets/katze.jpg")
   ];
 
   private posts = [
@@ -34,7 +34,7 @@ export class RestService implements OnInit, OnDestroy {
   constructor() {
   }
 
-  public loadUser(username: string): Promise<UserModel> {
+  public loadUser(username: string): Promise<User> {
     return new Promise((resolve, reject) => {
       for (let user of this.users) {
         if (user.username == username) resolve(user);
@@ -81,7 +81,7 @@ export class RestService implements OnInit, OnDestroy {
     });
   }
 
-  public loadPostsFromUser(user: UserModel): Promise<PostModel[]> {
+  public loadPostsFromUser(user: User): Promise<PostModel[]> {
     return new Promise((resolve) => resolve(this.posts.filter(post => post.createdBy == user)));
   }
 

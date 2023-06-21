@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {RestService} from "../shared/service/rest.service";
-import {UserModel} from "../shared/model/user.model";
-import {LoadingState} from "../shared/model/LoadingState";
-import {PostModel} from "../shared/model/post.model";
-import {openCreatePostForm} from "../shared/openCreatePostForm";
-import {AuthService} from "../shared/service/auth.service";
+import {RestService} from "../../shared/service/rest.service";
+import {User} from "../../shared/model/user";
+import {LoadingState} from "../../shared/model/LoadingState";
+import {PostModel} from "../../shared/model/post.model";
+import {openCreatePostForm} from "../../shared/openCreatePostForm";
+import {AuthService} from "../../shared/service/auth.service";
 
 @Component({
   selector: 'app-user-view',
@@ -13,7 +13,7 @@ import {AuthService} from "../shared/service/auth.service";
   styleUrls: ['./user-view.component.sass']
 })
 export class UserViewComponent {
- private user: UserModel | null = null;
+ private user: User | null = null;
  private state: LoadingState = LoadingState.Loading;
  private post: PostModel | null = null;
 
@@ -21,7 +21,7 @@ export class UserViewComponent {
     this.route.params.subscribe({
       next: params => {
         const id: string = params["id"];
-        let loadUser: Promise<UserModel> = restService.loadUser(id);
+        let loadUser: Promise<User> = restService.loadUser(id);
         loadUser
           .then(user => {
             this.user = user;
@@ -62,7 +62,7 @@ export class UserViewComponent {
     return this.user != null && this.state == LoadingState.Loaded;
   }
 
-  getUser():UserModel {
-    return <UserModel>this.user;
+  getUser():User {
+    return <User>this.user;
   }
 }

@@ -2,9 +2,9 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {PostsViewComponent} from "./posts-view/posts-view.component";
 import {PostDetailViewComponent} from "./post-detail-view/post-detail-view.component";
-import {UserViewComponent} from "./user-view/user-view.component";
-import {LogInViewComponent} from "./log-in-view/log-in-view.component";
-import {RegisterViewComponent} from "./register-view/register-view.component";
+import {UserViewComponent} from "./user/user-view/user-view.component";
+import {LogInViewComponent} from "./user/log-in-view/log-in-view.component";
+import {RegisterViewComponent} from "./user/register-view/register-view.component";
 
 const routes: Routes = [
   {

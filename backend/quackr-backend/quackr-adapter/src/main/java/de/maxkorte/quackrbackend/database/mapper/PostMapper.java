@@ -14,11 +14,11 @@ public class PostMapper {
     private final UserMapper userMapper;
 
     public Post toDomain(PostDTO postDTO) {
-        return new Post(postDTO.getId(), postDTO.getTitle(), postDTO.getBody(), userMapper.toDomain(postDTO.getUser()), postDTO.getImageUrl());
+        return new Post(postDTO.getId(), postDTO.getTitle(), postDTO.getBody(), userMapper.toDomain(postDTO.getUser()), postDTO.getImageUrl(), postDTO.getDate());
     }
 
     public PostDTO toDTO(Post post) {
-        return new PostDTO(post.getId(), post.getTitle(), post.getBody(), userMapper.toDTO(post.getUser()), post.getImageUrl());
+        return new PostDTO(post.getId(), post.getTitle(), post.getBody(), userMapper.toDTO(post.getUser()), post.getImageUrl(), post.getDate());
     }
 
     public List<Post> toDomainList(List<PostDTO> postDTOS) {

@@ -7,6 +7,8 @@ import de.maxkorte.quackrbackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -17,7 +19,7 @@ public class PostService {
 
     public Post createByUsername(String username, String title, String body, String imageUrl) {
         User user = userRepository.findByUsername(username);
-        return this.postRepository.save(new Post(null, title, body, user, imageUrl));
+        return this.postRepository.save(new Post(null, title, body, user, imageUrl, Date.valueOf(LocalDate.now())));
     }
 
     public List<Post> getAll() {

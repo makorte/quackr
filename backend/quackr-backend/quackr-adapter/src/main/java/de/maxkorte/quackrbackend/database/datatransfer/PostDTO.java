@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -21,4 +23,5 @@ public class PostDTO {
     @ManyToOne
     private UserDTO user;
     private String imageUrl;
+    private Date date;
 }

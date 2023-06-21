@@ -1,0 +1,19 @@
+<dialog id="create-post-dialog" class="createPostDialog ">
+  <h1 class="display-4 ">Erstelle einen neuen PostModel</h1>
+
+  <div class="mb-3 ">
+    <textarea placeholder="Inhalt..." cols="40" rows="5" [(ngModel)]="text" class="content-input"></textarea>
+  </div>
+
+  <div class="mb-3 ">
+    <app-image-input (url)="this.url= $event"/>
+  </div>
+  <p *ngIf="isError">Dein PostModel konnte nicht erstellt werden, versuche es
+    nochmal</p>
+
+  <div class="">
+    <button type="reset" (click)="closeDialog()" class="reset btn btn-secondary">Zurück</button>
+    <button type="submit" (click)="createPost()" class="submit btn btn-success">Erstellen</button>
+  </div>
+
+</dialog>

@@ -1,1 +1,26 @@
-<h1>quackr</h1>
+<div class="container-fluid" [@.disabled]="true">
+  <header class="d-flex flex-wrap align-content-center justify-content-center py-3 mb-4 border-bottom quackr-header">
+    <div class="col"></div>
+    <a routerLink="/" class="text-decoration-none text-body text-center col">
+      <h1 class="display-2 user-select-none">🦆 quackr</h1>
+    </a>
+    <div class="dropdown text-end col pt-3 ">
+      <app-side-menu-button *ngIf="isAuth()" (showSideBar)="showSideBar()"/>
+      <a *ngIf="!isAuth()" data-bs-toggle="offcanvas" role="button" (click)="showSideBar()">
+        <img src="/assets/placeholder.png" class="rounded-circle p-1" width="50" height="50">
+      </a>
+      <button *ngIf="!isAuth()" class="btn btn-primary" routerLink="/app/login">Anmelden</button>
+    </div>
+  </header>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col" [@routeAnimations]="getRouteAnimationData()">
+      <router-outlet/>
+    </div>
+    <div @flyInOut class="col" *ngIf="showSidebar">
+      <app-side-menu (onClose)="showSideBar()"/>
+    </div>
+  </div>
+</div>
+

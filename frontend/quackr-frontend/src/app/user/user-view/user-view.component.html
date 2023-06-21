@@ -1,0 +1,29 @@
+<div *ngIf="isLoading()" class="d-flex justify-content-center">
+  <span class="pe-3">Lade UserModel...</span>
+  <div class="spinner-border align-content-center" role="status">
+    <span class="visually-hidden text-md-center">Loading...</span>
+  </div>
+</div>
+
+<div *ngIf="isLoaded()">
+  <div class="container align-content-center">
+    <div class="row">
+      <div class="col pt-4">
+        <hr class="line"/>
+      </div>
+      <div class="col text-center">
+        <img src="{{getUser().userIconLink}}" class="rounded-4 " width="100" height="100">
+        <h1 class="display-6">{{getUser().username}}</h1>
+      </div>
+      <div class="col pt-4">
+        <hr class="line"/>
+      </div>
+    </div>
+  </div>
+
+  <app-user-post-list></app-user-post-list>
+  <app-create-post-popup [reloadFunction]="reloadFunction"></app-create-post-popup>
+
+  <app-create-post-button *ngIf="isAuth()" (createPost)="openCreatePostDialog()"/>
+
+</div>

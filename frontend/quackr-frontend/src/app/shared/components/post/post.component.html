@@ -1,0 +1,43 @@
+<a id="post-{{post.id}}"
+   class="scroll-gap"
+   href="."
+   [routerLink]="'.#'+post == null ? '' : post.id == null ? '' : post.id.toString()"
+   [fragment]="post.id == null ? '' : post.id.toString()"></a>
+<div id="post-div" class="col card back {{enableLinks ? '' : 'background-selected'}}">
+
+  <div class="vstack gap-1">
+    <div>
+      <a routerLink="/app/user/{{post.createdBy.username}}" class="text-decoration-none">
+        <img src="{{post.createdBy.userIconLink}}" class="rounded-circle p-1" width="50" height="50">
+        <span class="text-body">{{post.createdBy.username}}</span>
+      </a>
+
+    </div>
+    <img *ngIf="post.imageLink != null" src="{{post.imageLink}}"
+         class="card-img-top  object-fit-contain border rounded postImage " alt="..."/>
+  </div>
+  <div class="card-body">
+    <a *ngIf="enableLinks" [routerLink]="'/app/post-details/'+post.id" [fragment]="post.id+''"
+       class="text-decoration-none">
+      <p id="post-text" class="text-body">{{post.message}}</p>
+    </a>
+    <p *ngIf="!enableLinks" id="post-text-2" class="text-body">{{post.message}}</p>
+  </div>
+  <div class="card-footer">
+    <div class="container-fluid">
+      <div class="row align-items-start text-start">
+        <div class="col">
+          <span class="text-body-secondary p-2">{{post.createdAt}}</span>
+          <button *ngIf="enableLinks" class="btn btn-outline-light float-end" (click)="toPostDetail()">-></button>
+        </div>
+        <div class="col"></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+

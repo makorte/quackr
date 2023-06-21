@@ -1,0 +1,3 @@
+<app-post-list (reloadFunction)="setReload($event)"></app-post-list>
+<app-create-post-popup [reloadFunction]="reloadFunction"></app-create-post-popup>
+<app-create-post-button *ngIf="isAuth()" (createPost)="openCreatePostDialog()"/>

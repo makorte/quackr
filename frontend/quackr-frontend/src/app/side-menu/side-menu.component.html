@@ -1,0 +1,20 @@
+<div class="flex-column side-menu ps-3">
+  <div>
+    <h1>Menü</h1>
+  </div>
+
+  <div *ngIf="isAuth()">
+    <a class="text-body text-decoration-none" [routerLink]="'/app/user/'+user.username" (click)="onClose.emit(null)">Zu deinem
+      Profil</a>
+  </div>
+  <div *ngIf="isAuth()" class="pb-4">
+    <a class="text-body-emphasis fw-semibold text-decoration-none" (click)="onLogOut()"
+       routerLink="/app/login">Abmelden</a>
+  </div>
+
+  <div *ngIf="!isAuth()" class="pb-4">
+    <a class="text-body-emphasis fw-semibold text-decoration-none" routerLink="/app/login">Anmelden</a><br>
+    <a class="text-body-emphasis fw-semibold text-decoration-none" (click)="onLogOut()" routerLink="/app/register">Registrieren</a>
+  </div>
+</div>
+

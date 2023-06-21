@@ -18,8 +18,7 @@ public class PostDTO {
     @Id
     @GeneratedValue
     private Long id;
-    private String title;
-    private String body;
+    private String message;
     @ManyToOne
     private UserDTO user;
     private String imageUrl;

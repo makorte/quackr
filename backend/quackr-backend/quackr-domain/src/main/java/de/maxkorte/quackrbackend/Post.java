@@ -9,8 +9,7 @@ import java.sql.Date;
 @AllArgsConstructor
 public class Post {
     private final Long id;
-    private String title;
-    private String body;
+    private String message;
     private User user;
     private String imageUrl;
     private Date date;

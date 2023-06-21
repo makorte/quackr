@@ -9,8 +9,7 @@ import java.sql.Date;
 @AllArgsConstructor
 public class PostDTOOut {
     private Long id;
-    private String title;
-    private String body;
+    private String message;
     private String username;
     private String imageUrl;
     private Date date;

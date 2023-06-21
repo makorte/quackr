@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @Component
 public class PostMapperRest {
     public PostDTOOut toDTO(Post post) {
-        return new PostDTOOut(post.getId(), post.getTitle(), post.getBody(), post.getUser().getUsername(), post.getImageUrl(), post.getDate());
+        return new PostDTOOut(post.getId(), post.getMessage(), post.getUser().getUsername(), post.getImageUrl(), post.getDate());
     }
 
     public List<PostDTOOut> toDTOList(List<Post> posts) {

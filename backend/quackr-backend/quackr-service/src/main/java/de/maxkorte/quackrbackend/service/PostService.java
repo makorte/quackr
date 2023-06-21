@@ -17,9 +17,9 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
-    public Post createByUsername(String username, String title, String body, String imageUrl) {
+    public Post createByUsername(String username, String message, String imageUrl) {
         User user = userRepository.findByUsername(username);
-        return this.postRepository.save(new Post(null, title, body, user, imageUrl, Date.valueOf(LocalDate.now())));
+        return this.postRepository.save(new Post(null, message, user, imageUrl, Date.valueOf(LocalDate.now())));
     }
 
     public List<Post> getAll() {

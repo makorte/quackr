@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Router} from "@angular/router";
-import {AuthService} from "../../shared/service/auth.service";
 import {LoadingState} from "../../shared/model/LoadingState";
+import {UserService} from "../../shared/service/user.service";
 
 @Component({
   selector: 'app-register-view',
@@ -12,12 +12,25 @@ export class RegisterViewComponent {
   private registerState: LoadingState | null = null;
 
 
-  constructor(private router: Router, private authService: AuthService) {
+  constructor(private router: Router, private userService: UserService) {
 
   }
 
-  onRegister() {
+  onRegister(username: string, password: string, imageUrl: string) {
     this.registerState = LoadingState.Loading;
+
+    this.userService.register(username, password, imageUrl).subscribe({
+      next: () => {
+        this.registerState = LoadingState.Loaded;
+        this.router.navigate(["login"]);
+      },
+      error: (err) => {
+        console.log(err);
+        this.registerState = LoadingState.Error;
+      }
+    })
+
+    /*
     this.authService.register()
       .then(erfolgreich => {
         if (erfolgreich) {
@@ -27,6 +40,7 @@ export class RegisterViewComponent {
           this.registerState = LoadingState.Error;
         }
       })
+     */
   }
 
 

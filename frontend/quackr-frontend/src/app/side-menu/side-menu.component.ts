@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../shared/service/auth.service";
-import {User} from "../shared/model/user";
+import {User} from "../shared/model/user.model";
 
 @Component({
   selector: 'app-side-menu',
@@ -13,7 +13,7 @@ export class SideMenuComponent implements OnInit {
 
   private router: Router;
   private authService: AuthService;
-  user: User = new User("", "/assets/placeholder.png");
+  user: User;
 
   constructor(router: Router, authService: AuthService) {
     this.router = router;
@@ -21,8 +21,9 @@ export class SideMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.getCurrentUser()
-      .then(user => this.user = user);
+    this.authService.currentUser$.subscribe({
+      next: user => this.user = user
+    })
   }
 
   onLogOut() {

@@ -1,23 +1,28 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from "../../service/auth.service";
-import {RestService} from "../../service/rest.service";
-import {PostModel} from "../../model/post.model";
+import {User} from "../../model/user.model";
+import {PostService} from "../../service/post.service";
+import {HttpErrorResponse} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-create-post-popup',
   templateUrl: './create-post-popup.component.html',
   styleUrls: ['./create-post-popup.component.sass']
 })
-export class CreatePostPopupComponent {
-  text: string = "";
+export class CreatePostPopupComponent implements OnInit {
+  user: User;
   isError: boolean = false;
 
   @Input() reloadFunction: () => void = () => {
     console.log("Default post popup")
   };
-  url: string | null = null;
 
-  constructor(private restService: RestService,private authService: AuthService) {
+  constructor(private postService: PostService, private authService: AuthService, private router: Router) {
+  }
+
+  ngOnInit() {
+    this.authService.currentUser$.subscribe(user => this.user = user)
   }
 
   closeDialog() {
@@ -29,31 +34,24 @@ export class CreatePostPopupComponent {
     }
   }
 
-  createPost() {
-    // this.closeDialog();
-    this.authService.getCurrentUser()
-      .then(user => {
-        this.restService.createPost(new PostModel(this.text, user, new Date().toLocaleDateString()+" "+new Date().toLocaleTimeString(), null, this.url)).then((post) => {
-          console.log("reload:" + this.reloadFunction)
-          this.reloadFunction();
-          this.closeDialog()
-        })
-          .catch((error) => {
-            console.log(error)
-            this.isError = true
-          });
-
+  createPost(message: string, imageUrl: string) {
+    this.postService.createPost(message, imageUrl)
+      .then(() => {
+        console.log("reload:" + this.reloadFunction)
+        this.reloadFunction();
+        this.closeDialog()
+        console.log("post created")
       })
-      .catch(error => {
+      .catch((error: HttpErrorResponse) => {
+        if(error.status === 403) {
+          this.router.navigate(["/login"])
+        }
         console.log(error)
         this.isError = true
-      });
+      })
   }
 
   reset() {
-    this.text = "";
     this.isError = false;
   }
-
-
 }

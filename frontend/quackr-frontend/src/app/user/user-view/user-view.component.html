@@ -12,7 +12,7 @@
         <hr class="line"/>
       </div>
       <div class="col text-center">
-        <img src="{{getUser().userIconLink}}" class="rounded-4 " width="100" height="100">
+        <img [src]="getImageUrl()" class="rounded-4 " width="100" height="100">
         <h1 class="display-6">{{getUser().username}}</h1>
       </div>
       <div class="col pt-4">

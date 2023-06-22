@@ -7,16 +7,12 @@ import {LogInViewComponent} from "./user/log-in-view/log-in-view.component";
 import {RegisterViewComponent} from "./user/register-view/register-view.component";
 
 const routes: Routes = [
-  {
-    path: 'app', children: [
-      {path: "posts", component: PostsViewComponent, data: {animation: 'Posts'}},
-      {path: "post-details/:id", component: PostDetailViewComponent, data: {animation: 'PostDetail'}},
-      {path: "user/:id", component: UserViewComponent, data: {animation: 'User'}},
-      {path: "login", component: LogInViewComponent, data: {animation: 'LogIn'}},
-      {path: "register", component: RegisterViewComponent, data: {animation: 'Register'}}
-    ]
-  },
-  {path: "", redirectTo: "/app/posts", pathMatch: 'full'}
+  {path: "posts", component: PostsViewComponent, data: {animation: 'Posts'}},
+  {path: "post-details/:is", component: PostDetailViewComponent, data: {animation: 'PostDetail'}},
+  {path: "user/:username", component: UserViewComponent, data: {animation: 'User'}},
+  {path: "login", component: LogInViewComponent, data: {animation: 'LogIn'}},
+  {path: "register", component: RegisterViewComponent, data: {animation: 'Register'}},
+  {path: "", redirectTo: "/posts", pathMatch: 'full'}
 ];
 
 @NgModule({

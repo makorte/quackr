@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {PostModel} from "../../model/post.model";
-import {User} from "../../model/user";
+import {Post} from "../../model/post.model";
 import {Router} from "@angular/router";
 
 @Component({
@@ -15,7 +14,7 @@ export class PostComponent {
     this.router = router;
   }
 
-  @Input() post: PostModel = new PostModel("Lädt...", new User("", ""));
+  @Input() post: Post;
   @Input() enableLinks: boolean = true;
 
 
@@ -25,9 +24,17 @@ export class PostComponent {
   toPostDetail() {
     let frag = this.post == null ? '' : this.post.id == null ? '' : this.post.id.toString();
 
-    this.router.navigate(["app", "post-details", this.post.id], {
+    this.router.navigate(["post-details", this.post.id], {
       fragment: frag
     });
+  }
+
+  getImageUrl(): string {
+    if (!this.post.imageUrl) {
+      return "/assets/placeholder.png";
+    } else {
+      return this.post.imageUrl;
+    }
   }
 
 }

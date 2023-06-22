@@ -1,63 +1,45 @@
-import {Injectable, OnDestroy, OnInit} from '@angular/core';
-import {UserModel} from "../model/user.model";
-import {RestService} from "./rest.service";
+import {Injectable} from '@angular/core';
+import {User} from "../model/user.model";
+import {HttpClient} from "@angular/common/http";
+import {BehaviorSubject, map, Observable, tap} from "rxjs";
+import {AuthenticationResponse} from "../model/authenticationResponse.model";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'platform',
-
 })
-export class AuthService implements OnInit, OnDestroy {
+export class AuthService {
+  private currentUserSubject: BehaviorSubject<User | null>;
+  public currentUser$: Observable<User | null>;
 
-  constructor(private restService: RestService) {
+  constructor(private readonly httpClient: HttpClient) {
+    this.currentUserSubject = new BehaviorSubject<User>(null);
+    this.currentUser$ = this.currentUserSubject.asObservable();
   }
 
-  private isAuth = false;
+  public getJwt(): String {
+    return localStorage.getItem("jwt");
+  }
 
   public isAuthenticated(): boolean {
-    return this.isAuth;
+    return !!this.currentUserSubject.getValue();
   }
 
-  public register(): Promise<boolean> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        this.isAuth = true;
-        resolve(true);
-      }, 1000)
-    })
+  public login(username: String, password: String) {
+    return this.httpClient.post<AuthenticationResponse>(`${environment.baseAPIUrl}/auth/authenticate`, {
+      username,
+      password
+    }).pipe(
+      tap(response => {
+        this.currentUserSubject.next(response.user);
+        localStorage.setItem("jwt", response.jwt);
+      }),
+      map(() => true)
+    )
   }
 
-  public login(): Promise<boolean> {
-    return new Promise<boolean>((resolve) => {
-      setTimeout(() => {
-        this.isAuth = Math.random() > 0.5;
-        console.log(this.isAuth)
-        resolve(this.isAuth);
-      }, 1000)
-    })
-  }
-
-  public logout() {
-    this.isAuth = false;
-  }
-
-
-  public getCurrentUser(): Promise<UserModel> {
-    return new Promise<UserModel>((resolve, reject) => {
-      if (this.isAuth) {
-        this.restService.loadUser("TestNutzer")
-          .then(user => resolve(user))
-          .catch(error => reject(error));
-      } else {
-        reject("Nicht angemeldet")
-      }
-    })
-  }
-
-  ngOnDestroy(): void {
-    console.log("on Destroy auth")
-  }
-
-  ngOnInit(): void {
-    console.log("on Init auth")
+  public logout(): void {
+    this.currentUserSubject.next(null);
+    localStorage.removeItem("jwt")
   }
 }

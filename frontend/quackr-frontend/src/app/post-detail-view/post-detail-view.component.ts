@@ -1,34 +1,36 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {PostModel} from "../shared/model/post.model";
-import {RestService} from "../shared/service/rest.service";
+import {Post} from "../shared/model/post.model";
 import {LoadingState} from "../shared/model/LoadingState";
 import {openCreatePostForm} from "../shared/openCreatePostForm";
 import {AuthService} from "../shared/service/auth.service";
-import {resetParseTemplateAsSourceFileForTest} from "@angular/compiler-cli/src/ngtsc/typecheck/diagnostics";
+import {PostService} from "../shared/service/post.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-post-detail-view',
   templateUrl: './post-detail-view.component.html',
   styleUrls: ['./post-detail-view.component.sass']
 })
-export class PostDetailViewComponent {
-  private post: PostModel | null = null;
+export class PostDetailViewComponent implements OnInit {
+  private post: Post | null = null;
   private state: LoadingState = LoadingState.Loading;
 
   reloadFunction: () => void = () => {
     console.log("Default detail view")
   };
 
-  constructor(private router: Router, private route: ActivatedRoute, private restService: RestService, private authService: AuthService) {
+  constructor(private router: Router, private route: ActivatedRoute, private postService: PostService, private authService: AuthService) {
+  }
 
+  ngOnInit() {
     this.route.params.subscribe({
       next: params => {
         const id = Number(params["id"]);
         if (isNaN(id)) {
-          this.router.navigate(["app", "posts"]);
+          this.router.navigate(["posts"]);
         } else {
-          restService.loadPost(id)
+          this.postService.getPost(id)
             .then(post => {
               this.post = post;
               this.state = LoadingState.Loaded;
@@ -45,10 +47,14 @@ export class PostDetailViewComponent {
                 })
               }, 10)
             })
-            .catch(err => {
-              this.state = LoadingState.Error;
+            .catch((err: HttpErrorResponse) => {
+              if(err.status === 403) {
+                this.router.navigate(["/login"])
+              } else {
+                console.log(err)
+                this.state = LoadingState.Error;
+              }
             })
-          ;
         }
       }
     });
@@ -57,7 +63,7 @@ export class PostDetailViewComponent {
   backToOverview() {
     let frag = this.post == null ? '' : this.post.id == null ? '' : this.post.id.toString();
 
-    this.router.navigate(["app", "posts"], {
+    this.router.navigate(["posts"], {
       fragment: frag
     })
   }
@@ -77,12 +83,12 @@ export class PostDetailViewComponent {
     openCreatePostForm();
   }
 
-  isLoaded():boolean {
+  isLoaded(): boolean {
     return this.state == LoadingState.Loaded && this.post != null;
   }
 
-  getPost(): PostModel {
-    return <PostModel>this.post;
+  getPost(): Post {
+    return <Post>this.post;
   }
 
   isLoading() {

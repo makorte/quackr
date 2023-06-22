@@ -1,8 +1,7 @@
-import {User} from "./user";
+import {User} from "./user.model";
 
-export class PostModel {
-  constructor(public message: string, public createdBy: User, public createdAt: string = "10.06.2023 23:06", public id: number | null = null, public imageLink: string | null = null) {
-
+export class Post {
+  constructor(public id: number, public message: string, public username: User, public date: string, public imageUrl: string) {
   }
 }
 

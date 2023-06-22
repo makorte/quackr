@@ -1,8 +1,8 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {RestService} from "../../../shared/service/rest.service";
-import {PostModel} from "../../../shared/model/post.model";
-import {User} from "../../../shared/model/user";
+import {Post} from "../../../shared/model/post.model";
 import {ActivatedRoute, Router} from "@angular/router";
+import {PostService} from "../../../shared/service/post.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-user-post-list',
@@ -11,44 +11,37 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class UserPostListComponent implements OnInit {
 
-  private posts: PostModel[] = [];
+  private posts: Post[] = [];
   @Output() private reloadFunction = new EventEmitter<() => void>();
 
-  constructor(private router: Router,private route: ActivatedRoute,private restService: RestService) {
+  constructor(private router: Router, private route: ActivatedRoute, private postService: PostService) {
     this.loadPosts();
   }
 
-  getUserID(funk: (username: string) => void) {
-    let id = NaN;
-    this.route.params.subscribe({
-      next: params => {
-        funk( params["id"]);
-      }
-    });
-  }
-
-  loadUser(username: string): Promise<User> {
-    return this.restService.loadUser(username);
+  ngOnInit(): void {
+    this.reloadFunction.emit(this.loadPosts);
   }
 
   loadPosts() {
-    this.getUserID(
-      (userID) =>
-        this.loadUser(userID).then(user => this.restService.loadPostsFromUser(user).then(posts => this.posts = posts))
-    );
+    this.route.paramMap.subscribe(params => {
+      const username = params.get("username")
+      this.postService.getPostsByUsername(username)
+        .then(posts => this.posts = posts)
+        .catch((error: HttpErrorResponse) => {
+          if(error.status === 403) {
+            this.router.navigate(["/login"])
+          } else {
+            console.log(error)
+          }
+        });
+    })
   }
-
 
   noPostsLoaded(): boolean {
     return this.posts.length == 0;
   }
 
-
   protected readonly onabort = onabort;
-
-  ngOnInit(): void {
-    this.reloadFunction.emit(this.loadPosts);
-  }
 
   getPosts() {
     return this.posts;

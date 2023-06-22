@@ -9,13 +9,13 @@
       <a *ngIf="!isAuth()" data-bs-toggle="offcanvas" role="button" (click)="showSideBar()">
         <img src="/assets/placeholder.png" class="rounded-circle p-1" width="50" height="50">
       </a>
-      <button *ngIf="!isAuth()" class="btn btn-primary" routerLink="/app/login">Anmelden</button>
+      <button *ngIf="!isAuth()" class="btn btn-primary" routerLink="/login">Anmelden</button>
     </div>
   </header>
 </div>
 <div class="container-fluid">
   <div class="row">
-    <div class="col" [@routeAnimations]="getRouteAnimationData()">
+    <div class="col">
       <router-outlet/>
     </div>
     <div @flyInOut class="col" *ngIf="showSidebar">

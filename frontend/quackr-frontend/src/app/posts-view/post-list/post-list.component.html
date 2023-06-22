@@ -1,9 +1,13 @@
 <div class="container">
-  <div class="row">
+  <div class="row" *ngIf="loggedIn; else notLoggedIn">
     <button *ngIf="noPostsLoaded()" (click)="loadPosts()">Erneut Laden</button>
     <app-post *ngFor="let post of posts;"
               [post]="post"
     >
     </app-post>
   </div>
+  <ng-template #notLoggedIn>
+    <h3>You are not logged in</h3>
+    <p>To see the posts please <i routerLink="/login">log in</i></p>
+  </ng-template>
 </div>

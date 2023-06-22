@@ -8,6 +8,7 @@ import {ChildrenOutletContexts} from "@angular/router";
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass'],
+
   animations: [slideInAnimation, trigger('flyInOut', [
     state('in', style({transform: 'translateX(0)'})),
     transition('void => *', [
@@ -18,7 +19,6 @@ import {ChildrenOutletContexts} from "@angular/router";
       animate('160ms ease-in-out', style({transform: 'translateX(100%)'}))
     ])
   ])],
-
 })
 export class AppComponent {
 

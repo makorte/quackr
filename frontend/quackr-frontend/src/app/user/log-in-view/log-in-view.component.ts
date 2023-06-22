@@ -11,11 +11,25 @@ import {LoadingState} from "../../shared/model/LoadingState";
 export class LogInViewComponent {
   private loginState: LoadingState | null = null;
 
-  constructor(private router: Router,private authService: AuthService) {
+  constructor(private router: Router, private authService: AuthService) {
   }
 
-  onLogIn() {
+  onLogIn(username: string, password: string) {
     this.loginState = LoadingState.Loading;
+
+    this.authService.login(username, password).subscribe({
+      next: () => {
+        this.loginState = LoadingState.Loaded;
+        this.router.navigate(["posts"]);
+        console.log("login success")
+      },
+      error: (err) => {
+        this.loginState = LoadingState.Error;
+        console.log(err);
+      }
+    })
+
+    /*
     this.authService.login()
       .then(successful => {
         if (successful) {
@@ -25,6 +39,7 @@ export class LogInViewComponent {
           this.loginState = LoadingState.Error;
         }
       })
+     */
   }
 
   getLoadingColor() {

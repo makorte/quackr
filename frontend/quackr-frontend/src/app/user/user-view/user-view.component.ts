@@ -1,53 +1,50 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {RestService} from "../../shared/service/rest.service";
-import {User} from "../../shared/model/user";
+import {User} from "../../shared/model/user.model";
 import {LoadingState} from "../../shared/model/LoadingState";
-import {PostModel} from "../../shared/model/post.model";
+import {Post} from "../../shared/model/post.model";
 import {openCreatePostForm} from "../../shared/openCreatePostForm";
 import {AuthService} from "../../shared/service/auth.service";
+import {UserService} from "../../shared/service/user.service";
+import {PostService} from "../../shared/service/post.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-user-view',
   templateUrl: './user-view.component.html',
   styleUrls: ['./user-view.component.sass']
 })
-export class UserViewComponent {
- private user: User | null = null;
- private state: LoadingState = LoadingState.Loading;
- private post: PostModel | null = null;
+export class UserViewComponent implements OnInit{
+  private user: User | null = null;
+  private state: LoadingState = LoadingState.Loading;
+  private post: Post | null = null;
 
-  constructor(private router: Router,private route: ActivatedRoute, private restService: RestService,private authService: AuthService) {
-    this.route.params.subscribe({
-      next: params => {
-        const id: string = params["id"];
-        let loadUser: Promise<User> = restService.loadUser(id);
-        loadUser
-          .then(user => {
-            this.user = user;
-            this.state = LoadingState.Loaded;
-          })
-          .catch(err => {
-            this.state = LoadingState.Error;
-          })
-        ;
-      }
-    });
+  constructor(private router: Router, private route: ActivatedRoute, private userService: UserService, private postService: PostService, private authService: AuthService) {
   }
 
-  reloadFunction: () => void = () => console.log("Default User View");
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      const username = params.get("username");
+      this.userService.getUserByUsername(username)
+        .then(user => {
+          this.user = user;
+          this.state = LoadingState.Loaded;
+        })
+        .catch((error: HttpErrorResponse) => {
+          if(error.status === 403) {
+            this.router.navigate([""]);
+          }
 
-  setReload(reloadFunction: () => void) {
-    this.reloadFunction = () => {
-      this.post = null;
-      reloadFunction();
-    }
+          this.state = LoadingState.Error;
+        })
+    })
   }
+
+  reloadFunction: () => void = () => console.log("Default UserModel View");
 
   isAuth() {
     return this.authService.isAuthenticated();
   }
-
 
   openCreatePostDialog() {
     this.post = null;
@@ -62,7 +59,15 @@ export class UserViewComponent {
     return this.user != null && this.state == LoadingState.Loaded;
   }
 
-  getUser():User {
+  getUser(): User {
     return <User>this.user;
+  }
+
+  getImageUrl(): string {
+    if(!this.user.imageUrl) {
+      return "/assets/placeholder.png";
+    } else {
+      return this.user.imageUrl;
+    }
   }
 }

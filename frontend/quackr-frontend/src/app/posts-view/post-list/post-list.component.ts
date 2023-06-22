@@ -1,7 +1,8 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {RestService} from "../../shared/service/rest.service";
-import {PostModel} from "../../shared/model/post.model";
+import {Post} from "../../shared/model/post.model";
 import {ActivatedRoute} from "@angular/router";
+import {PostService} from "../../shared/service/post.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-post-list',
@@ -10,19 +11,23 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class PostListComponent implements OnInit {
 
-  public posts: PostModel[] = [];
+  public posts: Post[] = [];
+  public loggedIn = false;
 
   @Output() reloadFunction = new EventEmitter<() => void>();
 
-  constructor(private restService: RestService, private activeRoute: ActivatedRoute) {
-
+  constructor(private postService: PostService, private activeRoute: ActivatedRoute) {
     this.loadPosts();
   }
 
-  loadPosts() {
-    let result = this.restService.loadPosts();
-    result.then(value => {
+  ngOnInit(): void {
+    this.reloadFunction.emit(this.loadPosts);
+  }
+
+  loadPosts(): void {
+    this.postService.getPosts().then(value => {
       this.posts = value
+      this.loggedIn = true;
       setTimeout(() => {
         this.activeRoute.fragment.subscribe(value => {
           let element = document.getElementById("post-" + value);
@@ -32,17 +37,15 @@ export class PostListComponent implements OnInit {
           });
         })
       }, 10)
-
-    });
+    })
+      .catch((error: HttpErrorResponse) => {
+        if (error.status == 403) {
+          this.loggedIn = false;
+        }
+      })
   }
 
   noPostsLoaded(): boolean {
     return this.posts.length == 0;
-  }
-
-
-
-  ngOnInit(): void {
-    this.reloadFunction.emit(this.loadPosts);
   }
 }

@@ -1,37 +1,37 @@
 <form class="p-5">
   <div class="form-floating mb-5">
-    <input type="text" id="usernameInput" class="form-control" placeholder="">
+    <input type="text" id="usernameInput" class="form-control" placeholder="" #username>
     <label for="usernameInput">Benutzername</label>
   </div>
 
-  <div class="form-floating mb-5">
-    <input type="email" id="emailInput" class="form-control" placeholder="">
-    <label for="emailInput">Email</label>
-  </div>
-
   <div class="form-floating  mb-5">
-    <input type="password" id="passwortInput" class="form-control" placeholder="">
+    <input type="password" id="passwortInput" class="form-control" placeholder="" #password>
     <label for="passwortInput">Passwort</label>
   </div>
 
   <div class="form-floating  mb-5">
-    <app-image-input/>
+    <div class="container row">
+      <p class="lead">Foto Hochladen</p>
+      <div class="col">
+        <input id="urlInput" type="text" class="form-control" placeholder="Oder Url angeben" #imageUrl>
+      </div>
+    </div>
   </div>
 
 
   <div class="container align-content-center text-center">
     <div class="row">
       <hr class="col w-25">
-      <a [routerLink]="'/app/login'" class="col text-decoration-none text-center text-body">Melde dich an</a>
+      <a [routerLink]="'/login'" class="col text-decoration-none text-center text-body">Melde dich an</a>
       <hr class="col w-25">
     </div>
 
     <div class="row p-5">
       <div class="col">
-        <a routerLink="/app/posts" class="text-decoration-none text-body">⬅️</a>
+        <a routerLink="/posts" class="text-decoration-none text-body">⬅️</a>
       </div>
       <button class="col-10 btn-primary btn"
-              [disabled]="isRegisterError()" (click)="onRegister()">
+              [disabled]="isRegisterError()" (click)="onRegister(username.value, password.value, imageUrl.value)">
         Registrieren
       </button>
     </div>

@@ -1,11 +1,11 @@
 <form class="p-5">
   <div class="form-floating mb-5">
-    <input type="email" id="emailInput" class="form-control" placeholder="">
-    <label for="emailInput">Email</label>
+    <input type="text" id="usernameInput" class="form-control" placeholder="" #username>
+    <label for="usernameInput">Username</label>
   </div>
 
   <div class="form-floating mb-5">
-    <input type="password" id="passwortInput" class="form-control" placeholder="">
+    <input type="password" id="passwortInput" class="form-control" placeholder="" #password>
     <label for="passwortInput">Passwort</label>
   </div>
 
@@ -13,17 +13,17 @@
 
     <div class="row">
       <hr class="col w-25">
-      <a routerLink="/app/register" class="col text-decoration-none text-center text-body">Registriere dich</a>
+      <a routerLink="/register" class="col text-decoration-none text-center text-body">Registriere dich</a>
       <hr class="col w-25">
     </div>
 
 
     <div class="row p-5">
       <div class="col">
-        <a routerLink="/app/posts" class="text-decoration-none text-body">⬅️</a>
+        <a routerLink="/posts" class="text-decoration-none text-body">⬅️</a>
       </div>
       <button class="col-10 btn-primary btn" [disabled]="hasLoginError()"
-              (click)="onLogIn()">Anmelden
+              (click)="onLogIn(username.value, password.value)">Anmelden
       </button>
     </div>
   </div>

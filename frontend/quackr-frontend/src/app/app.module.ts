@@ -3,7 +3,6 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {PostComponent} from "./shared/components/post/post.component";
-import {RestService} from "./shared/service/rest.service";
 import {PostListComponent} from "./posts-view/post-list/post-list.component";
 import {CreatePostButtonComponent} from "./shared/components/create-post-button/create-post-button.component";
 import {PostsViewComponent} from "./posts-view/posts-view.component";
@@ -18,10 +17,13 @@ import {UserPostListComponent} from "./user/user-view/user-post-list/user-post-l
 import {PostThreadListComponent} from "./post-detail-view/post-thread-list/post-thread-list.component";
 import {LogInViewComponent} from "./user/log-in-view/log-in-view.component";
 import {RegisterViewComponent} from "./user/register-view/register-view.component";
-import {ImageInputComponent} from "./shared/components/image-input/image-input.component";
 import {SideMenuComponent} from "./side-menu/side-menu.component";
 import {SideMenuButtonComponent} from "./side-menu-button/side-menu-button.component";
 import {AppComponent} from './app.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {AuthInterceptor} from "./shared/interceptors/auth.interceptor";
+import {PostService} from "./shared/service/post.service";
+import {UserService} from "./shared/service/user.service";
 
 @NgModule({
   declarations: [
@@ -35,7 +37,6 @@ import {AppComponent} from './app.component';
     PostThreadListComponent,
     LogInViewComponent,
     RegisterViewComponent,
-    ImageInputComponent,
     SideMenuComponent,
     UserViewComponent,
     UserPostListComponent,
@@ -46,9 +47,14 @@ import {AppComponent} from './app.component';
     AppRoutingModule,
     FormsModule,
     NgOptimizedImage,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
-  providers: [RestService, AuthService],
+  providers: [PostService, UserService, AuthService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

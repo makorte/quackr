@@ -7,17 +7,17 @@
 
   <div class="vstack gap-1">
     <div>
-      <a routerLink="/app/user/{{post.createdBy.username}}" class="text-decoration-none">
-        <img src="{{post.createdBy.userIconLink}}" class="rounded-circle p-1" width="50" height="50">
-        <span class="text-body">{{post.createdBy.username}}</span>
+      <a routerLink="/user/{{post.username}}" class="text-decoration-none">
+        <img [src]="getImageUrl()" class="rounded-circle p-1" width="50" height="50">
+        <span class="text-body">{{post.username}}</span>
       </a>
 
     </div>
-    <img *ngIf="post.imageLink != null" src="{{post.imageLink}}"
+    <img *ngIf="!!post.imageUrl" src="{{post.imageUrl}}"
          class="card-img-top  object-fit-contain border rounded postImage " alt="..."/>
   </div>
   <div class="card-body">
-    <a *ngIf="enableLinks" [routerLink]="'/app/post-details/'+post.id" [fragment]="post.id+''"
+    <a *ngIf="enableLinks" [routerLink]="'/post-details/'+post.id" [fragment]="post.id+''"
        class="text-decoration-none">
       <p id="post-text" class="text-body">{{post.message}}</p>
     </a>
@@ -27,7 +27,7 @@
     <div class="container-fluid">
       <div class="row align-items-start text-start">
         <div class="col">
-          <span class="text-body-secondary p-2">{{post.createdAt}}</span>
+          <span class="text-body-secondary p-2">{{post.date}}</span>
           <button *ngIf="enableLinks" class="btn btn-outline-light float-end" (click)="toPostDetail()">-></button>
         </div>
         <div class="col"></div>

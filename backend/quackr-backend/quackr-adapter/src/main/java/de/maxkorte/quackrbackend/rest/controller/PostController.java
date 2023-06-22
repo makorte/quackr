@@ -22,12 +22,17 @@ public class PostController {
     private final UserService userService;
     private final PostMapperRest postMapper;
 
-    @GetMapping({"/posts/all", "/posts/all/"})
+    @GetMapping({"/posts", "/posts/"})
     public ResponseEntity<List<PostDTOOut>> getAll() {
         return ResponseEntity.ok(postMapper.toDTOList(postService.getAll()));
     }
 
-    @GetMapping({"/{username}/posts", "/{username}/posts/"})
+    @GetMapping({"/posts/{id}", "/posts/{id}/"})
+    public ResponseEntity<PostDTOOut> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(postMapper.toDTO(postService.getById(id)));
+    }
+
+    @GetMapping({"/users/{username}/posts", "/users/{username}/posts/"})
     public ResponseEntity<List<PostDTOOut>> getByUsername(@PathVariable String username) {
         return ResponseEntity.ok(postMapper.toDTOList(postService.getByUsername(username)));
     }

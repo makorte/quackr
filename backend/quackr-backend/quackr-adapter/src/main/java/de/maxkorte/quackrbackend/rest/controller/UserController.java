@@ -3,6 +3,7 @@ package de.maxkorte.quackrbackend.rest.controller;
 import de.maxkorte.quackrbackend.User;
 import de.maxkorte.quackrbackend.rest.dto.in.UserDTOIn;
 import de.maxkorte.quackrbackend.rest.dto.out.AuthenticationResponse;
+import de.maxkorte.quackrbackend.rest.dto.out.UserDTOOut;
 import de.maxkorte.quackrbackend.rest.mapper.UserMapperRest;
 import de.maxkorte.quackrbackend.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -26,5 +27,10 @@ public class UserController {
         String jwt = userService.authenticate(userDTOIn.getUsername(), userDTOIn.getPassword());
         User authenticatedUser = userService.getUserByUsername(userDTOIn.getUsername());
         return ResponseEntity.ok(new AuthenticationResponse(jwt, userMapper.toDTO(authenticatedUser)));
+    }
+
+    @GetMapping("/users/{username}")
+    public ResponseEntity<UserDTOOut> getUserByUsername(@PathVariable String username) {
+        return ResponseEntity.ok(userMapper.toDTO(userService.getUserByUsername(username)));
     }
 }

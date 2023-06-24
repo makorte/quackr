@@ -1,12 +1,8 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/quackr
-    username: quackr
-    password: quackr
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-      ddl-auto: create-drop
+  profiles:
+    active: dev
 server:
   port: 8084
   servlet:

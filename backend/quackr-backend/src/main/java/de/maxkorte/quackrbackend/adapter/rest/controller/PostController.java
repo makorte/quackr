@@ -4,9 +4,7 @@ import de.maxkorte.quackrbackend.adapter.rest.dto.in.PostDTOIn;
 import de.maxkorte.quackrbackend.adapter.rest.dto.out.PostDTOOut;
 import de.maxkorte.quackrbackend.adapter.rest.mapper.PostMapperRest;
 import de.maxkorte.quackrbackend.core.service.PostService;
-import de.maxkorte.quackrbackend.core.service.UserService;
 import de.maxkorte.quackrbackend.domain.Post;
-import de.maxkorte.quackrbackend.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,11 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 @RestController
+@RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
-    private final UserService userService;
     private final PostMapperRest postMapper;
 
     @GetMapping({"/posts", "/posts/"})
@@ -42,16 +39,15 @@ public class PostController {
         return ResponseEntity.ok(postMapper.toDTO(postService.createByUsername(authentication.getName(), post.getMessage(), post.getImageUrl())));
     }
 
-    @PreAuthorize("#username.equals(authentication.name)")
-    @DeleteMapping({"/{username}/posts/{postId}/", "/{username}/posts/{postId}"})
-    public ResponseEntity<Post> delete(@PathVariable String username, @PathVariable Long postId) {
-        User user = userService.getUserByUsername(username);
-        Post post = postService.getById(postId);
+    @PreAuthorize("authentication.name.equals(@postService.getById(#postId).getUser().getUsername())")
+    @PutMapping({"/posts/{postId}"})
+    public ResponseEntity<PostDTOOut> updatePost(@PathVariable Long postId, @RequestBody PostDTOIn postDTO, Authentication authentication) {
+        return ResponseEntity.ok(postMapper.toDTO(postService.updatebyUsername(authentication.getName(), postId, postDTO.getMessage(), postDTO.getImageUrl())));
+    }
 
-        if (!user.getId().equals(post.getUser().getId())) {
-            return ResponseEntity.badRequest().body(null);
-        }
-
+    @PreAuthorize("authentication.name.equals(@postService.getById(#postId).getUser().getUsername())")
+    @DeleteMapping({"/posts/{postId}/", "/posts/{postId}"})
+    public ResponseEntity<Post> delete(@PathVariable Long postId) {
         this.postService.delete(postId);
         return ResponseEntity.ok(null);
     }

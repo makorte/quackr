@@ -39,6 +39,11 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
+    public Post update(Post post) {
+        return this.postMapper.toDomain(this.postDAO.update(this.postMapper.toDTO(post)));
+    }
+
+    @Override
     public void delete(Long id) {
         this.postDAO.remove(id);
     }

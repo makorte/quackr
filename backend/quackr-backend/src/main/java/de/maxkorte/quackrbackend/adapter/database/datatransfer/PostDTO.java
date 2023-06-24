@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,5 +22,5 @@ public class PostDTO {
     @ManyToOne
     private UserDTO user;
     private String imageUrl;
-    private Date date;
+    private Timestamp date;
 }

@@ -10,5 +10,6 @@ public interface PostRepository {
     Post findById(Long id);
     List<Post> findByUser(User user);
     Post save(Post post);
+    Post update(Post post);
     void delete(Long id);
 }

@@ -53,6 +53,11 @@ public class PostDAO {
     }
 
     @Transactional
+    public PostDTO update(PostDTO postDTO) {
+        return this.entityManager.merge(postDTO);
+    }
+
+    @Transactional
     public void remove(Long id) {
         this.entityManager.remove(this.findById(id));
     }

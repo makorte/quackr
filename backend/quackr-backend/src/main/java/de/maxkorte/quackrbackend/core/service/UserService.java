@@ -32,6 +32,7 @@ public class UserService {
                 .username(user.getUsername())
                 .password(passwordEncoder.encode(user.getPassword()))
                         .imageUrl(user.getImageUrl())
+                        .role(user.getRole())
                 .build());
     }
 

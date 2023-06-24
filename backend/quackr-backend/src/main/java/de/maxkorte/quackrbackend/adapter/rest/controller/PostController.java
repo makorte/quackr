@@ -39,13 +39,13 @@ public class PostController {
         return ResponseEntity.ok(postMapper.toDTO(postService.createByUsername(authentication.getName(), post.getMessage(), post.getImageUrl())));
     }
 
-    @PreAuthorize("authentication.name.equals(@postService.getById(#postId).getUser().getUsername())")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || authentication.name.equals(@postService.getById(#postId).getUser().getUsername())")
     @PutMapping({"/posts/{postId}"})
-    public ResponseEntity<PostDTOOut> updatePost(@PathVariable Long postId, @RequestBody PostDTOIn postDTO, Authentication authentication) {
-        return ResponseEntity.ok(postMapper.toDTO(postService.updatebyUsername(authentication.getName(), postId, postDTO.getMessage(), postDTO.getImageUrl())));
+    public ResponseEntity<PostDTOOut> updatePost(@PathVariable Long postId, @RequestBody PostDTOIn postDTO) {
+        return ResponseEntity.ok(postMapper.toDTO(postService.update(postId, postDTO.getMessage(), postDTO.getImageUrl())));
     }
 
-    @PreAuthorize("authentication.name.equals(@postService.getById(#postId).getUser().getUsername())")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || authentication.name.equals(@postService.getById(#postId).getUser().getUsername())")
     @DeleteMapping({"/posts/{postId}/", "/posts/{postId}"})
     public ResponseEntity<Post> delete(@PathVariable Long postId) {
         this.postService.delete(postId);

@@ -14,10 +14,11 @@ import lombok.Setter;
 @Table(name = "quackr_user")
 public class UserDTO {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column(unique = true)
     private String username;
     private String password;
     private String imageUrl;
+    private String role;
 }

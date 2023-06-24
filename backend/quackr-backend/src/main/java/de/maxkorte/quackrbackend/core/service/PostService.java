@@ -22,8 +22,8 @@ public class PostService {
         return this.postRepository.save(new Post(null, message, user, imageUrl, Timestamp.valueOf(LocalDateTime.now())));
     }
 
-    public Post updatebyUsername(String username, Long postId, String message, String imageUrl) {
-        User user = userRepository.findByUsername(username);
+    public Post update(Long postId, String message, String imageUrl) {
+        User user = postRepository.findById(postId).getUser();
         return this.postRepository.update(new Post(postId, message, user, imageUrl, Timestamp.valueOf(LocalDateTime.now())));
     }
 

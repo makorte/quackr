@@ -9,4 +9,5 @@ import lombok.Data;
 public class UserDTOOut {
     private String username;
     private String imageUrl;
+    private String role;
 }

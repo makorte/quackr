@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseAPIUrl: 'http://localhost:8084/quackr/rest/v1',
+  baseAPIUrl: 'http://ls5vs019.cs.tu-dortmund.de:9005/quackr/rest/v1',
 };
 
 /*

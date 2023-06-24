@@ -1,4 +1,8 @@
 <form class="p-5">
+  <div *ngIf="!!getError()" class="alert alert-danger" role="alert">
+    {{getError()}}
+  </div>
+
   <div class="form-floating mb-5">
     <input type="text" id="usernameInput" class="form-control" placeholder="" #username>
     <label for="usernameInput">Benutzername</label>

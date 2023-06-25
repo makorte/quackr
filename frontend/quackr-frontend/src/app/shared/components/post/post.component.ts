@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {Post} from "../../model/post.model";
-import {Router} from "@angular/router";
+import {AuthService} from "../../service/auth.service";
+import {AsyncPipe} from "@angular/common";
 
 @Component({
   selector: 'app-post',
@@ -8,25 +9,13 @@ import {Router} from "@angular/router";
   styleUrls: ['./post.component.sass'],
 })
 export class PostComponent {
-  private router: Router;
-
-  constructor(router: Router) {
-    this.router = router;
-  }
-
   @Input() post: Post;
   @Input() enableLinks: boolean = true;
 
-
-  /**
-   * Navigiert zur Post-Detail-Seite
-   */
-  toPostDetail() {
-    let frag = this.post == null ? '' : this.post.id == null ? '' : this.post.id.toString();
-
-    this.router.navigate(["post-details", this.post.id], {
-      fragment: frag
-    });
+  constructor(
+    private readonly authService: AuthService,
+    private readonly asyncPipe: AsyncPipe
+  ) {
   }
 
   getImageUrl(): string {
@@ -37,4 +26,8 @@ export class PostComponent {
     }
   }
 
+  hasEditAccess(): boolean {
+    const currentUser = this.asyncPipe.transform(this.authService.currentUser$);
+    return currentUser.isAdmin() || currentUser.username === this.post.username;
+  }
 }

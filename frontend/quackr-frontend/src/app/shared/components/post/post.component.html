@@ -20,18 +20,14 @@
     <p *ngIf="!enableLinks" id="post-text-2" class="text-body">{{post.message}}</p>
   </div>
   <div class="card-footer">
-    <div class="container-fluid">
-      <div class="row align-items-start text-start">
-        <div class="col">
-          <span class="text-body-secondary p-2">{{post.date}}</span>
-          <button *ngIf="enableLinks" class="btn btn-outline-light float-end" (click)="toPostDetail()">-></button>
-        </div>
-        <div class="col"></div>
+    <div class="d-flex justify-content-between">
+        <p class="text-body-secondary">{{post.date}}</p>
+      <div *ngIf="hasEditAccess()">
+        <button type="button" class="btn btn-secondary">Bearbeiten</button>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-modal">Löschen</button>
       </div>
     </div>
-
   </div>
-
 </div>
 
 

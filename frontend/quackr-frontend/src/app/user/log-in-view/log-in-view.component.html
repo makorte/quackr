@@ -1,4 +1,8 @@
 <form class="p-5">
+  <div *ngIf="!!getError()" class="alert alert-danger" role="alert">
+    {{getError()}}
+  </div>
+
   <div class="form-floating mb-5">
     <input type="text" id="usernameInput" class="form-control" placeholder="" #username>
     <label for="usernameInput">Username</label>
@@ -22,8 +26,7 @@
       <div class="col">
         <a routerLink="/posts" class="text-decoration-none text-body">⬅️</a>
       </div>
-      <button class="col-10 btn-primary btn" [disabled]="hasLoginError()"
-              (click)="onLogIn(username.value, password.value)">Anmelden
+      <button class="col-10 btn-primary btn" (click)="onLogIn(username.value, password.value)">Anmelden
       </button>
     </div>
   </div>

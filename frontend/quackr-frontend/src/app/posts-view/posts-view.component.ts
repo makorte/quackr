@@ -1,30 +1,46 @@
-import {Component} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
 import {openCreatePostForm} from "../shared/openCreatePostForm";
 import {AuthService} from "../shared/service/auth.service";
+import {PostService} from "../shared/service/post.service";
+import {AsyncPipe} from "@angular/common";
+import {Post} from "../shared/model/post.model";
 
 @Component({
   selector: 'app-posts-view',
   templateUrl: './posts-view.component.html',
   styleUrls: ['./posts-view.component.sass']
 })
-export class PostsViewComponent {
-  reloadFunction: () => void = () => console.log("Default Posts View");
+export class PostsViewComponent implements OnInit{
+  currentPost: Post;
 
-  constructor(private router: Router, private activeRoute: ActivatedRoute, private authService: AuthService) {
+  constructor(
+    private readonly authService: AuthService,
+    private readonly postService: PostService,
+    private asyncPipe: AsyncPipe
+  ) {
   }
 
-
-  setReload(reloadFunction: () => void) {
-    this.reloadFunction = reloadFunction;
+  ngOnInit() {
+    this.postService.getPosts();
   }
 
+  getPosts(): Post[] {
+    return this.asyncPipe.transform(this.postService.posts$);
+  }
 
-  isAuth() {
-    return this.authService.isAuthenticated();
+  isAuth(): boolean {
+    return !!this.asyncPipe.transform(this.authService.currentUser$);
   }
 
   openCreatePostDialog() {
     openCreatePostForm();
+  }
+
+  getReloadFunction(): Function {
+    return () => this.postService.getPosts();
+  }
+
+  onDelete(post: Post) {
+    this.currentPost = post;
   }
 }

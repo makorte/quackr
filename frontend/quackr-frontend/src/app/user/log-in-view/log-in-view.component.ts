@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../../shared/service/auth.service";
 import {LoadingState} from "../../shared/model/LoadingState";
+import {HttpErrorResponse, HttpStatusCode} from "@angular/common/http";
 
 @Component({
   selector: 'app-log-in-view',
@@ -9,37 +10,28 @@ import {LoadingState} from "../../shared/model/LoadingState";
   styleUrls: ['./log-in-view.component.sass']
 })
 export class LogInViewComponent {
-  private loginState: LoadingState | null = null;
+  private loginState: LoadingState;
+  private error: string;
 
-  constructor(private router: Router, private authService: AuthService) {
+  constructor(private readonly router: Router, private readonly authService: AuthService) {
   }
 
   onLogIn(username: string, password: string) {
     this.loginState = LoadingState.Loading;
 
     this.authService.login(username, password).subscribe({
-      next: () => {
+      next: async () => {
         this.loginState = LoadingState.Loaded;
-        this.router.navigate(["posts"]);
-        console.log("login success")
+        await this.router.navigate(["posts"]);
       },
-      error: (err) => {
+      error: (err: HttpErrorResponse) => {
+        if(err.status === HttpStatusCode.Forbidden) {
+          this.error = "Falsche Anmeldedaten!"
+        }
         this.loginState = LoadingState.Error;
-        console.log(err);
+        console.error(err);
       }
     })
-
-    /*
-    this.authService.login()
-      .then(successful => {
-        if (successful) {
-          this.loginState = LoadingState.Loaded;
-          this.router.navigate(["app", "posts"]);
-        } else {
-          this.loginState = LoadingState.Error;
-        }
-      })
-     */
   }
 
   getLoadingColor() {
@@ -54,11 +46,11 @@ export class LogInViewComponent {
     return '';
   }
 
-  hasLoginError(): boolean {
-    return !(this.loginState == null || this.loginState == LoadingState.Error);
-  }
-
   isLoginIn(): boolean {
     return this.loginState != null;
+  }
+
+  getError(): string {
+    return this.error;
   }
 }

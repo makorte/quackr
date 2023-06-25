@@ -1,8 +1,5 @@
-<a id="post-{{post.id}}"
-   class="scroll-gap"
-   href="."
-   [routerLink]="'.#'+post == null ? '' : post.id == null ? '' : post.id.toString()"
-   [fragment]="post.id == null ? '' : post.id.toString()"></a>
+<div id="{{post.id}}"
+     class="scroll-gap"></div>
 <div id="post-div" class="col card back {{enableLinks ? '' : 'background-selected'}}">
 
   <div class="vstack gap-1">
@@ -17,8 +14,7 @@
          class="card-img-top  object-fit-contain border rounded postImage " alt="..."/>
   </div>
   <div class="card-body">
-    <a *ngIf="enableLinks" [routerLink]="'/post-details/'+post.id" [fragment]="post.id+''"
-       class="text-decoration-none">
+    <a *ngIf="enableLinks" [routerLink]="'/post-details/'+post.id" class="text-decoration-none">
       <p id="post-text" class="text-body">{{post.message}}</p>
     </a>
     <p *ngIf="!enableLinks" id="post-text-2" class="text-body">{{post.message}}</p>

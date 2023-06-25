@@ -4,7 +4,8 @@
   </div>
 
   <div *ngIf="isAuth()">
-    <a class="text-body text-decoration-none" [routerLink]="'/user/'+user.username" (click)="onClose.emit(null)">Zu deinem
+    <a class="text-body text-decoration-none" [routerLink]="'/user/'+getUser().username" (click)="onClose.emit(null)">Zu
+      deinem
       Profil</a>
   </div>
   <div *ngIf="isAuth()" class="pb-4">

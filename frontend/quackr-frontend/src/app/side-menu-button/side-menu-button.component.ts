@@ -10,7 +10,6 @@ import {User} from "../shared/model/user.model";
 export class SideMenuButtonComponent implements OnInit {
 
   @Output() private showSideBar = new EventEmitter<null>();
-
   private user: User;
 
   constructor(private authService: AuthService) {
@@ -20,10 +19,6 @@ export class SideMenuButtonComponent implements OnInit {
     this.authService.currentUser$.subscribe({
       next: user => this.user = user
     })
-  }
-
-  getUser(): User {
-    return this.user;
   }
 
   handleShowSidebarClick() {

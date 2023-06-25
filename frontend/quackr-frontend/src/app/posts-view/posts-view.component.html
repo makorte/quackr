@@ -1,3 +1,13 @@
-<app-post-list (reloadFunction)="setReload($event)"></app-post-list>
-<app-create-post-popup [reloadFunction]="reloadFunction"></app-create-post-popup>
+<div class="container">
+  <div class="row" *ngIf="isAuth(); else notLoggedIn">
+    <app-post *ngFor="let post of getPosts()" [post]="post">
+    </app-post>
+  </div>
+  <ng-template #notLoggedIn>
+    <h3>You are not logged in</h3>
+    <p>To see the posts please <i routerLink="/login">log in</i></p>
+  </ng-template>
+</div>
+
+<app-create-post-popup [reloadFunction]="getReloadFunction()"></app-create-post-popup>
 <app-create-post-button *ngIf="isAuth()" (createPost)="openCreatePostDialog()"/>

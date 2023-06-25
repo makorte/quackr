@@ -1,5 +1,5 @@
 <div *ngIf="isLoading()" class="d-flex justify-content-center">
-  <span class="pe-3">Lade PostModel...</span>
+  <span class="pe-3">Lade Post...</span>
   <div class="spinner-border align-content-center" role="status">
     <span class="visually-hidden text-md-center">Loading...</span>
   </div>
@@ -7,8 +7,5 @@
 
 <div *ngIf="isLoaded()">
   <button type="button" class="btn-close p-4" aria-label="Close" (click)="backToOverview()"></button>
-  <app-post-thread-list [post]="getPost()" (reloadFunction)="setReload($event)"/>
-  <!--  <app-post [post]="post" [enableLinks]="false"> <button type="button" class="btn-close" aria-label="Close" (click)="backToOverview()"></button></app-post>-->
+  <app-post [post]="getPost()" [enableLinks]="false"></app-post>
 </div>
-<app-create-post-popup [reloadFunction]="reloadFunction"></app-create-post-popup>
-<app-create-post-button *ngIf="isAuth()" (createPost)="openCreatePostDialog()"/>

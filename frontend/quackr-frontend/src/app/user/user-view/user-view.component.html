@@ -1,11 +1,4 @@
-<div *ngIf="isLoading()" class="d-flex justify-content-center">
-  <span class="pe-3">Lade UserModel...</span>
-  <div class="spinner-border align-content-center" role="status">
-    <span class="visually-hidden text-md-center">Loading...</span>
-  </div>
-</div>
-
-<div *ngIf="isLoaded()">
+<div>
   <div class="container align-content-center">
     <div class="row">
       <div class="col pt-4">
@@ -21,9 +14,13 @@
     </div>
   </div>
 
-  <app-user-post-list></app-user-post-list>
-  <app-create-post-popup [reloadFunction]="reloadFunction"></app-create-post-popup>
+  <div class="container">
+    <div class="row">
+      <app-post *ngFor="let post of getPosts();" [post]="post">
+      </app-post>
+    </div>
+  </div>
 
+  <app-create-post-popup [reloadFunction]="getReloadFunction()"></app-create-post-popup>
   <app-create-post-button *ngIf="isAuth()" (createPost)="openCreatePostDialog()"/>
-
 </div>

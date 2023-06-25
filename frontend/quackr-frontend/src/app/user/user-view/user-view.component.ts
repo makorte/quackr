@@ -1,73 +1,71 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../../shared/model/user.model";
-import {LoadingState} from "../../shared/model/LoadingState";
 import {Post} from "../../shared/model/post.model";
 import {openCreatePostForm} from "../../shared/openCreatePostForm";
 import {AuthService} from "../../shared/service/auth.service";
-import {UserService} from "../../shared/service/user.service";
 import {PostService} from "../../shared/service/post.service";
-import {HttpErrorResponse} from "@angular/common/http";
+import {AsyncPipe} from "@angular/common";
+import {UserService} from "../../shared/service/user.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-user-view',
   templateUrl: './user-view.component.html',
   styleUrls: ['./user-view.component.sass']
 })
-export class UserViewComponent implements OnInit{
-  private user: User | null = null;
-  private state: LoadingState = LoadingState.Loading;
-  private post: Post | null = null;
+export class UserViewComponent implements OnInit {
+  private user: User;
 
-  constructor(private router: Router, private route: ActivatedRoute, private userService: UserService, private postService: PostService, private authService: AuthService) {
+  constructor(
+    private readonly postService: PostService,
+    private readonly userService: UserService,
+    private readonly authService: AuthService,
+    private activatedRoute: ActivatedRoute,
+    private readonly asyncPipe: AsyncPipe
+  ) {
   }
 
-  ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      const username = params.get("username");
-      this.userService.getUserByUsername(username)
-        .then(user => {
-          this.user = user;
-          this.state = LoadingState.Loaded;
-        })
-        .catch((error: HttpErrorResponse) => {
-          if(error.status === 403) {
-            this.router.navigate([""]);
-          }
+  ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe(params => {
+      const username: string = params.get("username")
 
-          this.state = LoadingState.Error;
-        })
+      this.postService.getPostsByUsername(username);
+
+      this.userService.getUserByUsername(username)
+        .then(user => this.user = user)
+        .catch(error => console.error(error));
     })
   }
 
-  reloadFunction: () => void = () => console.log("Default UserModel View");
+  getPosts(): Post[] {
+    return this.asyncPipe.transform(this.postService.userPosts$);
+  }
 
-  isAuth() {
-    return this.authService.isAuthenticated();
+  isAuth(): boolean {
+    return !!this.asyncPipe.transform(this.authService.currentUser$);
   }
 
   openCreatePostDialog() {
-    this.post = null;
     openCreatePostForm();
   }
 
-  isLoading(): boolean {
-    return this.state == LoadingState.Loading;
-  }
-
-  isLoaded(): boolean {
-    return this.user != null && this.state == LoadingState.Loaded;
-  }
-
   getUser(): User {
-    return <User>this.user;
+    return this.user;
   }
 
   getImageUrl(): string {
-    if(!this.user.imageUrl) {
+    if (!this.user.imageUrl) {
       return "/assets/placeholder.png";
     } else {
       return this.user.imageUrl;
     }
+  }
+
+  getReloadFunction(): Function {
+    return () => this.postService.getPostsByUsername(this.user.username)
+  }
+
+  getRedirectPath(): string {
+    return `/user/${this.user.username}`;
   }
 }

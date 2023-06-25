@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from "../../service/auth.service";
 import {User} from "../../model/user.model";
 import {PostService} from "../../service/post.service";
@@ -11,24 +11,28 @@ import {Router} from "@angular/router";
   styleUrls: ['./create-post-popup.component.sass']
 })
 export class CreatePostPopupComponent implements OnInit {
+  @Input() reloadFunction: Function = () => {};
+  @ViewChild('message') messageInput: ElementRef;
+  @ViewChild('imageUrl') imageUrlInput: ElementRef;
+
   user: User;
   isError: boolean = false;
 
-  @Input() reloadFunction: () => void = () => {
-    console.log("Default post popup")
-  };
-
-  constructor(private postService: PostService, private authService: AuthService, private router: Router) {
+  constructor(
+    private readonly postService: PostService,
+    private readonly authService: AuthService,
+    private readonly router: Router
+  ) {
   }
 
   ngOnInit() {
-    this.authService.currentUser$.subscribe(user => this.user = user)
+    this.authService.currentUser$.subscribe(user => this.user = user);
   }
 
   closeDialog() {
-    let htmlElement: HTMLElement | null = document.getElementById("create-post-dialog");
+    let htmlElement: HTMLElement = document.getElementById("create-post-dialog");
     if (htmlElement) {
-      let dialog = <HTMLDialogElement>htmlElement;
+      let dialog = <HTMLDialogElement> htmlElement;
       dialog.close();
       this.reset();
     }
@@ -37,21 +41,21 @@ export class CreatePostPopupComponent implements OnInit {
   createPost(message: string, imageUrl: string) {
     this.postService.createPost(message, imageUrl)
       .then(() => {
-        console.log("reload:" + this.reloadFunction)
         this.reloadFunction();
         this.closeDialog()
-        console.log("post created")
       })
-      .catch((error: HttpErrorResponse) => {
+      .catch(async (error: HttpErrorResponse) => {
         if(error.status === 403) {
-          this.router.navigate(["/login"])
+         await  this.router.navigate(["/login"])
         }
-        console.log(error)
+        console.error(error)
         this.isError = true
       })
   }
 
   reset() {
     this.isError = false;
+    this.messageInput.nativeElement.value = "";
+    this.imageUrlInput.nativeElement.value = "";
   }
 }

@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {LoadingState} from "../../shared/model/LoadingState";
 import {UserService} from "../../shared/service/user.service";
-import {HttpErrorResponse} from "@angular/common/http";
+import {HttpErrorResponse, HttpStatusCode} from "@angular/common/http";
 
 @Component({
   selector: 'app-register-view',
@@ -10,11 +10,11 @@ import {HttpErrorResponse} from "@angular/common/http";
   styleUrls: ['./register-view.component.sass']
 })
 export class RegisterViewComponent {
-  private registerState: LoadingState | null = null;
+  private registerState: LoadingState;
   private error: string;
 
 
-  constructor(private router: Router, private userService: UserService) {
+  constructor(private readonly router: Router, private readonly userService: UserService) {
 
   }
 
@@ -22,15 +22,15 @@ export class RegisterViewComponent {
     this.registerState = LoadingState.Loading;
 
     this.userService.register(username, password, imageUrl).subscribe({
-      next: () => {
+      next: async () => {
         this.registerState = LoadingState.Loaded;
-        this.router.navigate(["login"]);
+        await this.router.navigate(["login"]);
       },
       error: (err: HttpErrorResponse) => {
-        if (err.status === 400) {
+        if (err.status === HttpStatusCode.BadRequest) {
           this.error = "Ein Nutzer mit diesem Nutzernamen existiert bereits!"
         }
-        console.log(err);
+        console.error(err);
         this.registerState = LoadingState.Error;
       }
     })

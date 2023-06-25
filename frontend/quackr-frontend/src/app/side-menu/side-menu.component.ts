@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../shared/service/auth.service";
 import {User} from "../shared/model/user.model";
+import {AsyncPipe} from "@angular/common";
 
 @Component({
   selector: 'app-side-menu',
@@ -10,14 +11,13 @@ import {User} from "../shared/model/user.model";
 })
 export class SideMenuComponent implements OnInit {
   @Output() onClose = new EventEmitter<null>();
+  private user: User;
 
-  private router: Router;
-  private authService: AuthService;
-  user: User;
-
-  constructor(router: Router, authService: AuthService) {
-    this.router = router;
-    this.authService = authService;
+  constructor(
+    private readonly router: Router,
+    private readonly authService: AuthService,
+    private readonly asyncPipe: AsyncPipe
+  ) {
   }
 
   ngOnInit(): void {
@@ -26,13 +26,16 @@ export class SideMenuComponent implements OnInit {
     })
   }
 
-  onLogOut() {
+  onLogOut(): void {
     this.authService.logout();
     this.onClose.emit(null);
-    // this.router.navigate(["app","login"]);
   }
 
-  isAuth() {
-    return this.authService.isAuthenticated();
+  isAuth(): boolean {
+    return !!this.asyncPipe.transform(this.authService.currentUser$);
+  }
+
+  getUser(): User {
+    return this.user;
   }
 }

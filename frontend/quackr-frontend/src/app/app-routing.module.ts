@@ -8,7 +8,7 @@ import {RegisterViewComponent} from "./user/register-view/register-view.componen
 
 const routes: Routes = [
   {path: "posts", component: PostsViewComponent, data: {animation: 'Posts'}},
-  {path: "post-details/:is", component: PostDetailViewComponent, data: {animation: 'PostDetail'}},
+  {path: "post-details/:id", component: PostDetailViewComponent, data: {animation: 'PostDetail'}},
   {path: "user/:username", component: UserViewComponent, data: {animation: 'User'}},
   {path: "login", component: LogInViewComponent, data: {animation: 'LogIn'}},
   {path: "register", component: RegisterViewComponent, data: {animation: 'Register'}},

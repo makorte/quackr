@@ -39,8 +39,4 @@ export class PostsViewComponent implements OnInit{
   getReloadFunction(): Function {
     return () => this.postService.getPosts();
   }
-
-  onDelete(post: Post) {
-    this.currentPost = post;
-  }
 }

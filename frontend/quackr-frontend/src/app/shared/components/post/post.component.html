@@ -24,11 +24,20 @@
         <p class="text-body-secondary">{{post.date}}</p>
       <div *ngIf="hasEditAccess()">
         <button type="button" class="btn btn-secondary">Bearbeiten</button>
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-modal">Löschen</button>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-modal" (click)="onDelete()">Löschen</button>
       </div>
     </div>
   </div>
 </div>
+
+<dialog #deleteDialog>
+  <h3>Soll der Post wirklich gelöscht werden?</h3>
+  <p>Diese Aktion kann nicht rückgängig gemacht werden.</p>
+  <div class="d-flex justify-content-end">
+    <button type="button" class="btn btn-secondary" (click)="onDeleteAbort()">Abbrechen</button>
+    <button type="button" class="btn btn-danger" (click)="onDeleteConfirm()">Löschen</button>
+  </div>
+</dialog>
 
 
 

@@ -16,7 +16,7 @@
 
   <div class="container">
     <div class="row">
-      <app-post *ngFor="let post of getPosts();" [post]="post">
+      <app-post *ngFor="let post of getPosts();" [post]="post" [redirectTo]="getRedirectPath()" [reloadFunction]="getReloadFunction()">
       </app-post>
     </div>
   </div>

@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row" *ngIf="isAuth(); else notLoggedIn">
-    <app-post *ngFor="let post of getPosts()" [post]="post">
+    <app-post *ngFor="let post of getPosts()" [post]="post" redirectTo="/posts" [reloadFunction]="getReloadFunction()">
     </app-post>
   </div>
   <ng-template #notLoggedIn>

@@ -15,6 +15,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class UserViewComponent implements OnInit {
   private user: User;
+  private loading = true;
 
   constructor(
     private readonly postService: PostService,
@@ -29,10 +30,12 @@ export class UserViewComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
       const username: string = params.get("username")
 
-      this.postService.getPostsByUsername(username);
-
       this.userService.getUserByUsername(username)
-        .then(user => this.user = user)
+        .then(user => {
+          this.user = user
+          this.loading = false;
+          this.postService.getPostsByUsername(username);
+        })
         .catch(error => console.error(error));
     })
   }
@@ -67,5 +70,9 @@ export class UserViewComponent implements OnInit {
 
   getRedirectPath(): string {
     return `/user/${this.user.username}`;
+  }
+
+  isLoading(): boolean {
+    return this.loading;
   }
 }

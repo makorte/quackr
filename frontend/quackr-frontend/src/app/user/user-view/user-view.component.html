@@ -1,4 +1,6 @@
-<div>
+<p *ngIf="isLoading()">Loading...</p>
+
+<div *ngIf="!isLoading()">
   <div class="container align-content-center">
     <div class="row">
       <div class="col pt-4">

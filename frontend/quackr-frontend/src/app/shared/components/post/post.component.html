@@ -21,10 +21,10 @@
   </div>
   <div class="card-footer">
     <div class="d-flex justify-content-between">
-        <p class="text-body-secondary">{{post.date}}</p>
+      <p class="text-body-secondary">{{post.date}}</p>
       <div *ngIf="hasEditAccess()">
-        <button type="button" class="btn btn-secondary">Bearbeiten</button>
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-modal" (click)="onDelete()">Löschen</button>
+        <button type="button" class="btn btn-secondary" (click)="onUpdate()">Bearbeiten</button>
+        <button type="button" class="btn btn-danger" (click)="onDelete()">Löschen</button>
       </div>
     </div>
   </div>
@@ -36,6 +36,19 @@
   <div class="d-flex justify-content-end">
     <button type="button" class="btn btn-secondary" (click)="onDeleteAbort()">Abbrechen</button>
     <button type="button" class="btn btn-danger" (click)="onDeleteConfirm()">Löschen</button>
+  </div>
+</dialog>
+
+<dialog #updateDialog>
+  <h3 class="mb-3">Post bearbeiten</h3>
+  <textarea placeholder="Inhalt..." cols="40" rows="5" class="mb-3" #updateMessage></textarea>
+  <div class="mb-3">
+    <label for="updateImageUrl" class="form-label">Bild wählen</label>
+    <input placeholder="URL zum Bild..." type="text" id="updateImageUrl" class="form-control" #updateImageUrl>
+  </div>
+  <div class="d-flex justify-content-end">
+    <button type="button" class="btn btn-secondary" (click)="onUpdateAbort()">Abbrechen</button>
+    <button type="button" class="btn btn-primary" (click)="onUpdateConfirm()">Speichern</button>
   </div>
 </dialog>
 

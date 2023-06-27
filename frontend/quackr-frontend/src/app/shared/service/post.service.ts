@@ -63,6 +63,10 @@ export class PostService {
     return lastValueFrom(this.httpClient.post<Post>(`${environment.baseAPIUrl}/posts`, {message, imageUrl}));
   }
 
+  public updatePost(id: number, message: String, imageUrl: string): Promise<Post> {
+    return lastValueFrom(this.httpClient.put<Post>(`${environment.baseAPIUrl}/posts/${id}`, {message, imageUrl}));
+  }
+
   public deletePost(id: number): Promise<any> {
     return lastValueFrom(this.httpClient.delete(`${environment.baseAPIUrl}/posts/${id}`));
   }

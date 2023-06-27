@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {Post} from "../../model/post.model";
 import {AuthService} from "../../service/auth.service";
 import {AsyncPipe} from "@angular/common";
@@ -17,6 +17,9 @@ export class PostComponent {
   @Input() reloadFunction: Function;
   @Input() redirectTo: string;
   @ViewChild('deleteDialog') deleteDialog: ElementRef;
+  @ViewChild('updateDialog') updateDialog: ElementRef;
+  @ViewChild('updateMessage') updateMessageInput: ElementRef;
+  @ViewChild('updateImageUrl') updateImageUrlInput: ElementRef;
 
   constructor(
     private readonly authService: AuthService,
@@ -60,6 +63,34 @@ export class PostComponent {
         }
         console.error(error);
       })
+  }
 
+  onUpdate(): void {
+    (<HTMLTextAreaElement>this.updateMessageInput.nativeElement).value = this.post.message;
+    (<HTMLInputElement>this.updateImageUrlInput.nativeElement).value = this.post.imageUrl;
+    (<HTMLDialogElement>this.updateDialog.nativeElement).showModal();
+  }
+
+  onUpdateAbort(): void {
+    (<HTMLDialogElement>this.updateDialog.nativeElement).close();
+  }
+
+  onUpdateConfirm(): void {
+    this.postService.updatePost(
+      this.post.id,
+      (<HTMLTextAreaElement>this.updateMessageInput.nativeElement).value,
+      (<HTMLInputElement>this.updateImageUrlInput.nativeElement).value
+    )
+      .then(async () => {
+        this.reloadFunction();
+        (<HTMLDialogElement>this.deleteDialog.nativeElement).close();
+        await this.router.navigate([this.redirectTo]);
+      })
+      .catch((error: HttpErrorResponse) => {
+        if (error.status === 403) {
+          this.router.navigate(["/login"])
+        }
+        console.error(error);
+      })
   }
 }

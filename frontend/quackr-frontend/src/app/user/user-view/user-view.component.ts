@@ -6,7 +6,8 @@ import {AuthService} from "../../shared/service/auth.service";
 import {PostService} from "../../shared/service/post.service";
 import {AsyncPipe} from "@angular/common";
 import {UserService} from "../../shared/service/user.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {HttpErrorResponse, HttpStatusCode} from "@angular/common/http";
 
 @Component({
   selector: 'app-user-view',
@@ -16,13 +17,15 @@ import {ActivatedRoute} from "@angular/router";
 export class UserViewComponent implements OnInit {
   private user: User;
   private loading = true;
+  private error: string;
 
   constructor(
     private readonly postService: PostService,
     private readonly userService: UserService,
     private readonly authService: AuthService,
-    private activatedRoute: ActivatedRoute,
-    private readonly asyncPipe: AsyncPipe
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly asyncPipe: AsyncPipe,
+    private readonly router: Router
   ) {
   }
 
@@ -36,7 +39,15 @@ export class UserViewComponent implements OnInit {
           this.loading = false;
           this.postService.getPostsByUsername(username);
         })
-        .catch(error => console.error(error));
+        .catch(async (error: HttpErrorResponse) => {
+          this.loading = false;
+          if(error.status === HttpStatusCode.Forbidden) {
+            this.authService.logout();
+            await this.router.navigate(["/login"])
+          }
+          console.error(error)
+          this.error = "Es ist ein Fehler beim Laden des Nutzers aufgetreten. Bitte versuche es später erneut.";
+        });
     })
   }
 
@@ -74,5 +85,13 @@ export class UserViewComponent implements OnInit {
 
   isLoading(): boolean {
     return this.loading;
+  }
+
+  hasError(): boolean {
+    return !!this.error;
+  }
+
+  getError(): string {
+    return this.error;
   }
 }

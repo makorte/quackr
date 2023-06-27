@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {Post} from "../../model/post.model";
 import {AuthService} from "../../service/auth.service";
 import {AsyncPipe} from "@angular/common";
@@ -57,9 +57,10 @@ export class PostComponent {
         (<HTMLDialogElement>this.deleteDialog.nativeElement).close();
         await this.router.navigate([this.redirectTo]);
       })
-      .catch((error: HttpErrorResponse) => {
+      .catch(async (error: HttpErrorResponse) => {
         if (error.status === 403) {
-          this.router.navigate(["/login"])
+          await this.router.navigate(["/login"]);
+          this.authService.logout();
         }
         console.error(error);
       })
@@ -86,9 +87,10 @@ export class PostComponent {
         (<HTMLDialogElement>this.deleteDialog.nativeElement).close();
         await this.router.navigate([this.redirectTo]);
       })
-      .catch((error: HttpErrorResponse) => {
+      .catch(async (error: HttpErrorResponse) => {
         if (error.status === 403) {
-          this.router.navigate(["/login"])
+          await this.router.navigate(["/login"])
+          this.authService.logout();
         }
         console.error(error);
       })

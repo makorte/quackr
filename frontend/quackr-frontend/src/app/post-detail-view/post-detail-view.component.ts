@@ -4,6 +4,7 @@ import {Post} from "../shared/model/post.model";
 import {LoadingState} from "../shared/model/LoadingState";
 import {PostService} from "../shared/service/post.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {AuthService} from "../shared/service/auth.service";
 
 @Component({
   selector: 'app-post-detail-view',
@@ -17,7 +18,8 @@ export class PostDetailViewComponent implements OnInit {
   constructor(
     private readonly router: Router,
     private readonly route: ActivatedRoute,
-    private readonly postService: PostService
+    private readonly postService: PostService,
+    private readonly authService: AuthService
   ) {
   }
 
@@ -35,11 +37,12 @@ export class PostDetailViewComponent implements OnInit {
             })
             .catch((err: HttpErrorResponse) => {
               if (err.status === 403) {
-                this.router.navigate(["/login"])
+                this.authService.logout();
+                this.router.navigate(["/login"]);
               } else {
-                console.error(err)
                 this.state = LoadingState.Error;
               }
+              console.error(err);
             })
         }
       }

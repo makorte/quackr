@@ -46,6 +46,7 @@ export class CreatePostPopupComponent implements OnInit {
       })
       .catch(async (error: HttpErrorResponse) => {
         if(error.status === 403) {
+          this.authService.logout();
          await  this.router.navigate(["/login"])
         }
         console.error(error)

@@ -1,4 +1,5 @@
 <p *ngIf="isLoading()">Loading...</p>
+<p *ngIf="hasError()">{{getError()}}</p>
 
 <div *ngIf="!isLoading()">
   <div class="container align-content-center">

@@ -4,9 +4,9 @@
 
   <div class="vstack gap-1">
     <div>
-      <a routerLink="/user/{{post.username}}" class="text-decoration-none">
-        <img [src]="getImageUrl()" class="rounded-circle p-1" width="50" height="50">
-        <span class="text-body">{{post.username}}</span>
+      <a routerLink="/user/{{post.user.username}}" class="text-decoration-none">
+        <img [src]="getUserImageUrl()" class="rounded-circle p-1" width="50" height="50">
+        <span class="text-body">{{post.user.username}}</span>
       </a>
 
     </div>

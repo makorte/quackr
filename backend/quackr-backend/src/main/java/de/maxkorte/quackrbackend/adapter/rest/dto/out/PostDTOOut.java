@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 public class PostDTOOut {
     private Long id;
     private String message;
-    private String username;
+    private UserDTOOut user;
     private String imageUrl;
     private Timestamp date;
 }

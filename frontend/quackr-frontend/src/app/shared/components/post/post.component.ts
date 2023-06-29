@@ -29,8 +29,8 @@ export class PostComponent {
   ) {
   }
 
-  getImageUrl(): string {
-    if (!this.post.imageUrl) {
+  getUserImageUrl(): string {
+    if (!this.post.user.imageUrl) {
       return "/assets/placeholder.png";
     } else {
       return this.post.imageUrl;
@@ -39,7 +39,7 @@ export class PostComponent {
 
   hasEditAccess(): boolean {
     const currentUser = this.asyncPipe.transform(this.authService.currentUser$);
-    return currentUser.role === "ROLE_ADMIN" || currentUser.username === this.post.username;
+    return currentUser.role === "ROLE_ADMIN" || currentUser.username === this.post.user.username;
   }
 
   onDelete(): void {

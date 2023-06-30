@@ -33,7 +33,7 @@ export class PostComponent {
     if (!this.post.user.imageUrl) {
       return "/assets/placeholder.png";
     } else {
-      return this.post.imageUrl;
+      return this.post.user.imageUrl;
     }
   }
 

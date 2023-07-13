@@ -1,8 +1,0 @@
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost:9105/group-g06
-    username: group-g06
-    password: 2eGsM9evRNdWkVJn
-  jpa:
-    hibernate:
-      ddl-auto: update

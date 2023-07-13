@@ -4,7 +4,6 @@ spring:
   profiles:
     active: dev
 server:
-  port: 8084
   servlet:
     context-path: /quackr/rest/v1
 
